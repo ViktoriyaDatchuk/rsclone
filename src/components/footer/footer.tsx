@@ -3,35 +3,39 @@ import './footer.css'
 import GithubLogo from "../../assets/img/github-logo.svg"
 import RsLogo from "../../assets/img/rs_school_js.svg"
 
-export function Footer(): ReactElement {
-  return (
-    <div className="footer">
-      <div className=''>
-         <div className='footer__social'>
-            <a href='https://github.com/viktoriyadatchuk' target="_blank" rel="noreferrer">
-               <img className='footer__social-img' src={GithubLogo} alt="Github" />
-            </a>
-            <p className='footer__social-name'>@viktoriyadatchuk</p>
-         </div>
-         <div className='footer__social'>
-            <a href='https://github.com/proboynick' target="_blank" rel="noreferrer">
-               <img className='footer__social-img' src={GithubLogo} alt="Github" />
-            </a>
-            <p className='footer__social-name'>@proboynick</p>
-         </div>
-         <div className='footer__social'>
-            <a href='https://github.com/ksenchik' target="_blank" rel="noreferrer">
-               <img className='footer__social-img' src={GithubLogo} alt="Github" />
-            </a>
-            <p className='footer__social-name'>@ksenchik</p>
-         </div>
-      </div>
-      <div className='footer__course'>
-         <a href="https://rs.school/js/" target="_blank" rel="noreferrer">
-            <img className='footer__course-img' src={RsLogo} alt="RS-school" />
-         </a>
-         <p className='footer__social-name'>2023 «JavaScript/Front-end»</p>
-      </div>
-    </div>
-  )
+interface User  { name: string; link: string, img: string };
+const users: User[] = [
+   {name: '@viktoriyadatchuk', link: 'https://github.com/viktoriyadatchuk', img: GithubLogo},
+   {name: '@proboynick', link: 'https://github.com/proboynick', img: GithubLogo},
+   {name: '@ksenchik', link: 'https://github.com/ksenchik', img: GithubLogo},
+   {name: '2023 «JavaScript/Front-end»', link: 'https://rs.school/js/', img: RsLogo}
+]
+
+interface FooterProps {
+   name: string,
+   link: string,
+   img: string
 }
+
+function FooterElement({name, link, img}: FooterProps): ReactElement {
+   return(
+      <div className='footer__social'>
+         <img className='footer__social-img' src={img} alt="" />
+         <a className='footer__social-text' href={link}>{name}</a>
+      </div>
+   )
+}
+
+export function Footer(): ReactElement {
+   return (
+     <div className="footer">
+       <div>
+          <FooterElement img={users[0].img} link={users[0].link} name={users[0].name}/>
+          <FooterElement img={users[1].img} link={users[1].link} name={users[1].name}/>
+          <FooterElement img={users[2].img} link={users[2].link} name={users[2].name}/>          
+       </div>
+       <FooterElement img={users[3].img} link={users[3].link} name={users[3].name}/>       
+     </div>
+   )
+ }
+
