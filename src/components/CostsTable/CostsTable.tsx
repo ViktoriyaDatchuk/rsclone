@@ -1,49 +1,99 @@
-import { useEffect, useState } from 'react';
-import styles from './CostsTable.module.css';
+import { useState } from 'react';
+import './CostsTable.css';
+import classNames from 'classnames';
 
 export const CostsTable = (): JSX.Element => {
-  const [sortingField, setSortingField] = useState('date');
-
-  useEffect(() => {
-    console.log('update');
-  }, [sortingField]);
+  const [sortingField, setSortingField] = useState('');
+  const [isAscending, setIsAscending] = useState(true);
 
   const handleHeadClick = (event: React.MouseEvent<HTMLTableSectionElement, MouseEvent>): void => {
     const cell = event.target as HTMLTableCellElement;
-
     const field = cell.dataset.property as keyof Cost;
-    Costs.sort((a, b): number => {
-      if (a[field] < b[field]) {
-        return -1;
-      }
-      if (a[field] > b[field]) {
-        return 1;
-      }
-      return 0;
-    });
+
+    if (sortingField !== field) {
+      setIsAscending(true);
+      Costs.sort((a, b): number => {
+        if (a[field] < b[field]) {
+          return -1;
+        }
+        if (a[field] > b[field]) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+    if (sortingField === field) {
+      setIsAscending(!isAscending);
+      Costs.reverse();
+    }
     setSortingField(field);
   };
 
+  const order = classNames({ desc: !isAscending });
+
   return (
-    <table className={styles.CostsTable}>
-      <thead
-        onClick={(event) => {
-          handleHeadClick(event);
-        }}
-      >
-        <tr>
-          <th data-property="date">Дата</th>
-          <th data-property="account">Счет</th>
-          <th data-property="category">Категория расхода</th>
-          <th data-property="subcategory">Подкатегория расхода</th>
-          <th data-property="quantity">Количество</th>
-          <th data-property="unit">Единица измерения</th>
-          <th data-property="amount">Сумма</th>
-          <th data-property="note">Примечания</th>
-        </tr>
-      </thead>
-      <tbody>{mapCosts(Costs)}</tbody>
-    </table>
+    <>
+      <table className="CostsTable">
+        <thead
+          onClick={(event) => {
+            handleHeadClick(event);
+          }}
+        >
+          <tr>
+            <th
+              className={classNames(order, { active: sortingField === 'date' })}
+              data-property="date"
+            >
+              Дата
+            </th>
+            <th
+              className={classNames(order, { active: sortingField === 'account' })}
+              data-property="account"
+            >
+              Счет
+            </th>
+            <th
+              className={classNames(order, { active: sortingField === 'category' })}
+              data-property="category"
+            >
+              Категория расхода
+            </th>
+            <th
+              className={classNames(order, { active: sortingField === 'subcategory' })}
+              data-property="subcategory"
+            >
+              Подкатегория расхода
+            </th>
+            <th
+              className={classNames(order, { active: sortingField === 'quantity' })}
+              data-property="quantity"
+            >
+              Количество
+            </th>
+            <th
+              className={classNames(order, { active: sortingField === 'unit' })}
+              data-property="unit"
+            >
+              Единица измерения
+            </th>
+            <th
+              className={classNames(order, { active: sortingField === 'amount' })}
+              data-property="amount"
+            >
+              Сумма
+            </th>
+            <th
+              className={classNames(order, { active: sortingField === 'note' })}
+              data-property="note"
+            >
+              Примечания
+            </th>
+          </tr>
+        </thead>
+        <tbody>{mapCosts(Costs)}</tbody>
+      </table>
+      <div className="totalRow"></div>
+    </>
   );
 };
 
