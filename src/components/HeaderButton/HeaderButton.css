@@ -1,13 +1,21 @@
 .header__button {
   display: flex;
   gap: 10px;
+  align-items: center;
   padding: 10px;
-  border: none;
+  font-size: 1.1rem;
+  background-color: var(--main-background-color);
+  border: 1px solid var(--main-background-color);
+  border-radius: 5px;
 }
 
 .header__button:hover,
 .header__button-activ {
-  border: 1px solid blue;
-  border-radius: 5px;
-  background-color: aqua;
+  cursor: pointer;
+  border: 1px solid var(--main-activElemrntBorder-color);
+  background-color: var(--main-activElementBackground-color);
+}
+
+.button__image {
+  height: 60px;
 }

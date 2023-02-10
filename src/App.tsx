@@ -1,7 +1,12 @@
-import React from 'react'
+import type { ReactElement } from 'react'
+import { Header } from './components/Header/Header'
 
-function App() {
-  return <div className='App'></div>
+function App(): ReactElement {
+  return (
+    <div className="App">
+      <Header />
+    </div>
+  )
 }
 
 export default App
