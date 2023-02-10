@@ -8,9 +8,10 @@ import Loans from '../../assets/img/loans.png'
 import Planning from '../../assets/img/planning.png'
 import { HeaderButton } from '../HeaderButton/HeaderButton'
 import HeaderIcon from '../../assets/img/headerIcon.png'
+import { HeaderListType } from '../../interfaces/interfaces'
 
 export const Header = (): ReactElement => {
-  const HeaderList = {
+  const HeaderList: HeaderListType = {
     Счета: Accounts,
     Расходы: Expenses,
     Доходы: Income,
