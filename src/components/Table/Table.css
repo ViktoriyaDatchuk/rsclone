@@ -1,6 +1,8 @@
-.CostsTable {
-  width: 90%;
+.Table {
+  width: 99%;
+  margin: 0 auto;
   border-collapse: collapse;
+  user-select: none;
 }
 
 thead {
@@ -28,11 +30,13 @@ td {
   border-left: 1px solid gray;
   border-right: 1px solid gray;
   text-align: center;
-  height: 20px;
 }
 
 .totalRow {
-  background-color: yellow;
-  height: 20px;
-  margin-top: auto;
+  background-color: rgb(255, 255, 186);
+}
+
+.checked {
+  background-color: rgba(70, 166, 255, 0.3);
+  border: 1px solid rgba(128, 128, 128, 0.3);
 }

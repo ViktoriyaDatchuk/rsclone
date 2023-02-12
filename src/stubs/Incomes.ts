@@ -1,0 +1,32 @@
+export const Incomes = [
+  {
+    date: '01-01-2023',
+    account: 'account-1',
+    category: 'work',
+    subcategory: 'cleaning',
+    quantity: 2,
+    unit: 'pcs',
+    amount: 40,
+    note: '',
+  },
+  {
+    date: '02-01-2023',
+    account: 'account-2',
+    category: 'garage',
+    subcategory: 'tires',
+    quantity: 1,
+    unit: 'pcs',
+    amount: 60.01,
+    note: 'some note',
+  },
+  {
+    date: '03-01-2023',
+    account: 'account-3',
+    category: 'kitchen',
+    subcategory: 'meat',
+    quantity: 2,
+    unit: 'kg',
+    amount: 10,
+    note: 'note',
+  },
+];
