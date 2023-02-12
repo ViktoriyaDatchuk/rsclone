@@ -1,0 +1,21 @@
+.header__button {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  font-size: 1.1rem;
+  background-color: var(--main-background-color);
+  border: 1px solid var(--main-background-color);
+  border-radius: 5px;
+}
+
+.header__button:hover,
+.header__button-activ {
+  cursor: pointer;
+  border: 1px solid var(--main-activElemrntBorder-color);
+  background-color: var(--main-activElementBackground-color);
+}
+
+.button__image {
+  height: 60px;
+}
