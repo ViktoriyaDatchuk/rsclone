@@ -1,3 +1,9 @@
+// 1. src/options создаем новый файл (например dropdownExpenses.ts), 
+//    там переменная с массивом нужных значений (export default[]...)
+// 2. в нужном месте импортируем переменную (import  dropdownExpenses  from './options/dropdownValue')
+//    а так же компонент (import { Dropdown } from './components/Dropdown/dropdown')
+// 3. вставляем компонент (<Dropdown options={dropdownExpenses} />)
+
 import type { DropdownProps } from '../../interfaces/propsTypes'
 import './dropdown.css'
 import type { ReactElement } from 'react'
