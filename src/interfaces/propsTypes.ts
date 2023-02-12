@@ -4,7 +4,11 @@ export interface HeaderButtonType {
 }
 
 export interface FooterProps {
-   name: string,
-   link: string,
-   img: string
+  name: string
+  link: string
+  img: string
+}
+
+export interface DropdownProps {
+  options: string[]
 }
