@@ -1,0 +1,42 @@
+.Table {
+  width: 99%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  user-select: none;
+}
+
+thead {
+  background-color: rgb(232, 232, 232);
+}
+
+th {
+  padding: 0 10px 3px;
+  border: 1px solid gray;
+  line-height: 110%;
+  position: relative;
+}
+
+.active::before {
+  position: absolute;
+  content: '↓';
+  right: 10px;
+}
+
+.desc.active::before {
+  content: '↑';
+}
+
+td {
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  text-align: center;
+}
+
+.totalRow {
+  background-color: rgb(255, 255, 186);
+}
+
+.checked {
+  background-color: rgba(70, 166, 255, 0.3);
+  border: 1px solid rgba(128, 128, 128, 0.3);
+}
