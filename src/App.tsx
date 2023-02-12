@@ -6,7 +6,7 @@ function App(): ReactElement {
   return (
     <div className="App">
       <Header />
-      
+
       <Footer />
     </div>
   )
