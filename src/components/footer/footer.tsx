@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react'
 import './footer.css'
+import type {FooterProps} from "../../interfaces/propsTypes"
 import GithubLogo from "../../assets/img/github-logo.svg"
 import RsLogo from "../../assets/img/rs_school_js.svg"
 
@@ -10,12 +11,6 @@ const users: User[] = [
    {name: '@ksenchik', link: 'https://github.com/ksenchik', img: GithubLogo},
    {name: '2023 «JavaScript/Front-end»', link: 'https://rs.school/js/', img: RsLogo}
 ]
-
-interface FooterProps {
-   name: string,
-   link: string,
-   img: string
-}
 
 function FooterElement({name, link, img}: FooterProps): ReactElement {
    return(
