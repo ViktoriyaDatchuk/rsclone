@@ -1,24 +1,11 @@
-import type { ReactElement } from 'react'
-import './Header.css'
-import Accounts from '../../assets/img/accounts.png'
-import Contributions from '../../assets/img/contributions.png'
-import Expenses from '../../assets/img/expenses.png'
-import Income from '../../assets/img/income.png'
-import Loans from '../../assets/img/loans.png'
-import Planning from '../../assets/img/planning.png'
-import { HeaderButton } from '../HeaderButton/HeaderButton'
-import HeaderIcon from '../../assets/img/headerIcon.png'
-import type { HeaderListType } from '../../interfaces/interfaces'
+import type { ReactElement } from 'react';
+import './Header.css';
+import { HeaderButton } from '../HeaderButton/HeaderButton';
+import HeaderIcon from '../../assets/img/headerIcon.png';
+import { HeaderList } from '../../options/HeaderList';
+import { Link } from 'react-router-dom';
 
 export const Header = (): ReactElement => {
-  const HeaderList: HeaderListType = {
-    Счета: Accounts,
-    Расходы: Expenses,
-    Доходы: Income,
-    'Кредиты и Долги': Loans,
-    Планирование: Planning,
-    'Банковские вклады': Contributions,
-  }
   return (
     <header>
       <div className="header__title">
@@ -27,9 +14,11 @@ export const Header = (): ReactElement => {
       </div>
       <div className="header__container">
         {Object.entries(HeaderList).map((button) => (
-          <HeaderButton image={button[1]} title={button[0]} key={button[0]} />
+          <Link to={button[1][1]} className="header__link" key={button[0]}>
+            <HeaderButton image={button[1][0]} title={button[0]} />
+          </Link>
         ))}
       </div>
     </header>
-  )
-}
+  );
+};

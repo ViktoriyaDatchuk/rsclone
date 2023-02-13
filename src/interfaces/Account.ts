@@ -1,4 +1,4 @@
-import { TableHeader } from './TableHeader';
+import type { TableHeader } from './TableHeader';
 
 export interface Account {
   id: number;
