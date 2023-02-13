@@ -1,0 +1,16 @@
+.block-button-element button {
+  color: var(--main-text-color);
+  background-color: transparent;
+  font-size: 1.1rem;
+  border: 1px solid var(--main-background-color);
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.block-button-element button:hover {
+  cursor: pointer;
+  border: 1px solid var(--main-activElemrntBorder-color);
+  background-color: var(--main-activElementBackground-color);
+}

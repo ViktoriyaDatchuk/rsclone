@@ -1,29 +1,29 @@
 .footer {
-   display: flex;
-   justify-content: space-between;
-   align-items: end;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
 }
 
-.footer__social{
-   display: flex;
-   align-items: center;
-   gap: 10px;
+.footer__social {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.footer__social-img{
-   height: 20px;
+.footer__social-img {
+  height: 20px;
 }
 
-.footer__social-name{
-   margin: 0;
+.footer__social-name {
+  margin: 0;
 }
 
-.footer__social-text{
-   text-decoration: none;
-   padding: 3px 0;
-   transition: all 0.3s ease;
+.footer__social-text {
+  text-decoration: none;
+  padding: 3px 0;
+  transition: all 0.3s ease;
 }
 
-.footer__social-text:hover{
-   color: #010cff;
+.footer__social-text:hover {
+  color: #010cff;
 }
