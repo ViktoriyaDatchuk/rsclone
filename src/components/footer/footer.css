@@ -2,6 +2,10 @@
   display: flex;
   justify-content: space-between;
   align-items: end;
+  border: 1px solid;
+  padding: 10px;
+  border-top: 1px solid var(--main-line-color);
+  border-bottom: 1px solid var(--main-line-color);
 }
 
 .footer__social {
@@ -21,6 +25,7 @@
 .footer__social-text {
   text-decoration: none;
   padding: 3px 0;
+  color: var(--main-text-color);
   transition: all 0.3s ease;
 }
 
