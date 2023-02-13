@@ -17,3 +17,7 @@
 .title__image {
   height: 40px;
 }
+
+.header__link {
+  text-decoration: none;
+}

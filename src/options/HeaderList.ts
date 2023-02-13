@@ -7,10 +7,10 @@ import Loans from '../assets/img/loans.png';
 import Planning from '../assets/img/planning.png';
 
 export const HeaderList: HeaderListType = {
-  Счета: Accounts,
-  Расходы: Expenses,
-  Доходы: Income,
-  'Кредиты и Долги': Loans,
-  Планирование: Planning,
-  'Банковские вклады': Contributions,
+  Счета: [Accounts, '/'],
+  Расходы: [Expenses, '/costs'],
+  Доходы: [Income, '/incomes'],
+  'Кредиты и Долги': [Loans],
+  Планирование: [Planning],
+  'Банковские вклады': [Contributions],
 };
