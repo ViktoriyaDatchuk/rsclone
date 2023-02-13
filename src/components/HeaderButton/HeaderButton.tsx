@@ -1,6 +1,6 @@
-import type { ReactElement } from 'react'
-import type { HeaderButtonType } from '../../interfaces/propsTypes'
-import './HeaderButton.css'
+import type { ReactElement } from 'react';
+import type { HeaderButtonType } from '../../interfaces/propsTypes';
+import './HeaderButton.css';
 
 export const HeaderButton = ({ image, title }: HeaderButtonType): ReactElement => {
   return (
@@ -8,5 +8,5 @@ export const HeaderButton = ({ image, title }: HeaderButtonType): ReactElement =
       <img src={image} alt={image} className="button__image"></img>
       <p className="button__text">{title}</p>
     </button>
-  )
-}
+  );
+};
