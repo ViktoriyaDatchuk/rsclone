@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import { AccountsPage } from './pages/AccountsPage';
 import { CostsPage } from './pages/CostsPage';
 import { IncomesPage } from './pages/IncomesPage';
+import { ActionsBlock } from './components/ActionBlock/ActionsBlock';
 
 function App(): ReactElement {
   return (
@@ -16,6 +17,7 @@ function App(): ReactElement {
         <Route path="/incomes" element={<IncomesPage />} />
       </Routes>
 
+      {/* <ActionsBlock /> */}
       <Footer />
     </div>
   );
