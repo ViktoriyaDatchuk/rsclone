@@ -5,6 +5,8 @@
   --main-activElemrntBorder-color: #98c7f9;
   --main-text-color: #1c2732;
   --main-line-color: #b3bbc4;
+  --main-modalTitle-color: #6d7278;
+  --main-fieldsetBorder-color: #e4dede;
 }
 html {
   height: 100%;
@@ -23,7 +25,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-h1 {
+h1,
+h4 {
   margin: 0;
 }
 

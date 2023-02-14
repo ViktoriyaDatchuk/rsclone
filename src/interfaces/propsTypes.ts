@@ -10,5 +10,5 @@ export interface FooterProps {
 }
 
 export interface DropdownProps {
-  options: string[];
+  options: (string | JSX.Element)[];
 }

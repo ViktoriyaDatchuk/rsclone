@@ -10,7 +10,7 @@ import type { ReactElement } from 'react';
 import { useState } from 'react';
 
 export function Dropdown({ options }: DropdownProps): ReactElement {
-  const [selected, setSelected] = useState('Выберите вариант');
+  const [selected, setSelected] = useState<string | JSX.Element>('Выберите вариант');
   const [isActive, setIsActive] = useState(false);
 
   return (
