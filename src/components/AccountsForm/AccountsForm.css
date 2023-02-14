@@ -1,0 +1,87 @@
+.accounts__modal {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  transition: 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.accounts__modal__content {
+  border-radius: 10px;
+  width: 30%;
+  background-color: var(--main-background-color);
+}
+
+.accounts__modal__content input:focus,
+.accounts__modal__content textarea:focus {
+  outline: none;
+}
+
+.accounts__modal__content input {
+  border: 1px solid var(--main-line-color);
+  background-color: var(--main-inputBackground-color);
+  border-radius: 3px;
+  height: 30px;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.modal__title {
+  padding: 10px;
+  background-color: #cad4de;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  color: var(--main-modalTitle-color);
+}
+
+.modal__form {
+  margin: 10px;
+}
+
+.accounts__modal__content fieldset {
+  margin-bottom: 5px;
+  border-color: var(--main-fieldsetBorder-color);
+}
+
+.input__accountName {
+  width: 100%;
+}
+
+.accountsIcon {
+  height: 30px;
+  transition: 0.2s;
+}
+
+.accountsIcon:hover {
+  transform: scale(1.2);
+}
+
+.halfWidtElement {
+  width: 50%;
+}
+
+.accounts__modal .modal__table,
+.input__table {
+  width: 100%;
+}
+
+.modal__table th {
+  padding: 2px 20px;
+  position: static;
+}
+
+.modal__table td {
+  background-color: var(--main-inputBackground-color);
+}
+
+.accounts__modal__content textarea {
+  width: 100%;
+  background-color: var(--main-inputBackground-color);
+  border: 1px solid var(--main-line-color);
+  border-radius: 3px;
+}

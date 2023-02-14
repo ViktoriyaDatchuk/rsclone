@@ -1,3 +1,4 @@
+import { AccountsForm } from '../components/AccountsForm/AccountsForm';
 import { Table } from '../components/Table/Table';
 import { AccountHeader } from '../interfaces/Account';
 import { accounts } from '../stubs/Accounts';
@@ -10,6 +11,7 @@ export const AccountsPage = (): JSX.Element => {
         fieldNames={AccountHeader.fieldNames}
         fieldProperties={AccountHeader.fieldProperties}
       />
+      <AccountsForm />
     </div>
   );
 };
