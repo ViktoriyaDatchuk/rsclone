@@ -12,3 +12,14 @@ export interface FooterProps {
 export interface DropdownProps {
   options: (string | JSX.Element)[];
 }
+
+export interface BlockButtonProps {
+  onToggleAdd: () => void;
+  onToggleDel: () => void;
+  onToggleEdit: () => void;
+}
+
+export interface BlockButtonElementProps {
+  name: string;
+  func: () => void;
+}

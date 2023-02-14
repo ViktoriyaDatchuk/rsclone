@@ -1,8 +1,5 @@
 .dropdown {
   width: 100%;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   position: relative;
 }
@@ -13,6 +10,7 @@
   cursor: pointer;
   justify-content: space-between;
   background-color: var(--main-inputBackground-color);
+
 }
 
 .dropdown .dropdown-content {
