@@ -1,12 +1,13 @@
 * {
   box-sizing: border-box;
-  --main-background-color: rgb(239, 237, 235);
+  --main-background-color: #efedeb;
   --main-activElementBackground-color: #e0ebf7;
   --main-activElemrntBorder-color: #98c7f9;
   --main-text-color: #1c2732;
   --main-line-color: #b3bbc4;
   --main-modalTitle-color: #6d7278;
   --main-fieldsetBorder-color: #e4dede;
+  --main-inputBackground-color: #fcfaf7;
 }
 html {
   height: 100%;
