@@ -1,0 +1,36 @@
+.filters {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 20px;
+  font-size: 18px;
+}
+
+.filters::before {
+  content: 'Фильтр:';
+  position: absolute;
+  top: -2px;
+  left: 20px;
+}
+
+input[type='date'],
+select {
+  border: 1px solid gainsboro;
+  width: fit-content;
+  height: 30px;
+  padding: 5px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+label {
+  margin: 0 10px 0 20px;
+}
+
+select[name='subcategories'] {
+  margin-right: 20px;
+}
