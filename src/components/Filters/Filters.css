@@ -1,0 +1,39 @@
+.filters {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 20px;
+  font-size: 18px;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  border-top: none;
+  border-bottom: none;
+}
+
+.filters::before {
+  content: 'Фильтр:';
+  position: absolute;
+  top: -2px;
+  left: 20px;
+}
+
+.filters__date,
+.filters__select {
+  border: 1px solid gainsboro;
+  width: fit-content;
+  height: 30px;
+  padding: 5px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.filters__label {
+  margin: 0 10px 0 20px;
+}
+
+select[name='subcategories'] {
+  margin-right: 20px;
+}
