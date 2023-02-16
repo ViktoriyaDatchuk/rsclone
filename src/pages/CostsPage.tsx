@@ -7,52 +7,55 @@ import { Costs } from '../stubs/Costs';
 
 export const CostsPage = (): JSX.Element => {
   const [tempCosts, setTempCosts] = useState(Costs);
+
   const accounts = Costs.map((cost) => {
     return cost.account;
   });
   const categories = Costs.map((cost) => {
     return cost.category;
   });
-  const subCategories = tempCosts.map((cost) => {
+  const subCategories = Costs.map((cost) => {
     return cost.subcategory;
   });
-  const minDate = Costs[0].date.split('-').reverse().join('-');
-  const maxDate = Costs[Costs.length - 1].date.split('-').reverse().join('-');
-  const filter = {
+
+  const [filter, setFilter] = useState({
     dateFrom: '',
     dateTo: '',
     account: '',
     category: '',
     subcategory: '',
-  };
+  });
 
-  const changeFilterProperties = (property: keyof Filter, value: string): void => {
+  const applyFilter = (property: keyof Filter, value: string): void => {
     filter[property] = value;
-    console.log(filter);
+    setFilter(filter);
+    const filteredCosts = Costs.filter((cost) => {
+      return filter.dateFrom !== '' ? new Date(cost.date) >= new Date(filter.dateFrom) : true;
+    })
+      .filter((cost) => {
+        return filter.dateTo !== '' ? new Date(cost.date) <= new Date(filter.dateTo) : true;
+      })
+      .filter((cost) => {
+        return filter.account !== '' ? cost.account === filter.account : true;
+      })
+      .filter((cost) => {
+        return filter.category !== '' ? cost.category === filter.category : true;
+      })
+      .filter((cost) => {
+        return filter.subcategory !== '' ? cost.subcategory === filter.subcategory : true;
+      });
+    setTempCosts(filteredCosts);
   };
 
-  const filterCosts = (parameter: string, value: string): void => {
-    switch (parameter) {
-      case 'date-from': {
-        if (value !== '') {
-          setTempCosts(
-            Costs.filter((item) => {
-              return item.date >= value;
-            })
-          );
-        }
-        break;
-      }
-      case 'category': {
-        setTempCosts(
-          Costs.filter((item) => {
-            return item.category === value;
-          })
-        );
-        console.log('here', tempCosts);
-        break;
-      }
-    }
+  const resetFilters = (): void => {
+    setFilter({
+      dateFrom: '',
+      dateTo: '',
+      account: '',
+      category: '',
+      subcategory: '',
+    });
+    setTempCosts(Costs);
   };
 
   return (
@@ -68,9 +71,8 @@ export const CostsPage = (): JSX.Element => {
         categories={categories}
         subcategories={subCategories}
         accounts={accounts}
-        minDate={minDate}
-        maxDate={maxDate}
-        filterChange={changeFilterProperties}
+        applyFilter={applyFilter}
+        resetCallBack={resetFilters}
       />
     </>
   );
