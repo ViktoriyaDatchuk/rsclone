@@ -6,3 +6,8 @@ export interface HeaderListType {
   Планирование: string[];
   'Банковские вклады': string[];
 }
+
+export enum AccountsTransaction {
+  Add = 'Добавление',
+  Change = 'Редактирование',
+}

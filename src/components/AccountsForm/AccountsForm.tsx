@@ -1,29 +1,37 @@
+import { useState } from 'react';
 import type { ReactElement } from 'react';
 import ReactDOM from 'react-dom';
 import { Images } from '../../options/AccountIcons';
 import { getDate } from '../../utils/todayDate';
+import { BlockButtonElement } from '../ActionBlock/BlockButton/BlockButtonElement';
 import { Dropdown } from '../Dropdown/dropdown';
 import './AccountsForm.css';
-
-enum AccountsTransaction {
-  Add = 'Добавление',
-  Change = 'Редактирование',
-}
+import type { AccountsFormProps } from '../../interfaces/propsTypes';
 
 const currency = 'Рубли';
 
 const portal = document.getElementById('portal') as HTMLElement;
 
-export const AccountsForm = (): ReactElement => {
+export const AccountsForm = ({ transaction, onClose }: AccountsFormProps): ReactElement => {
+  const [name, setName] = useState('');
   return ReactDOM.createPortal(
     <div className="accounts__modal">
       <div className="accounts__modal__content">
-        <h4 className="modal__title">{AccountsTransaction.Add} счета</h4>
-        <form className="modal__form">
+        <h4 className="modal__title">{transaction} счета</h4>
+        <form
+          className="modal__form"
+          onSubmit={(event) => {
+            event.preventDefault();
+          }}
+        >
           <fieldset>
             <legend>Название счета</legend>
             <input
               type="text"
+              value={name}
+              onChange={(event) => {
+                setName(event.target.value);
+              }}
               placeholder="Например: наличные, счет в банке и т.п."
               className="input__accountName"
             ></input>
@@ -61,7 +69,15 @@ export const AccountsForm = (): ReactElement => {
             <legend>Примечание</legend>
             <textarea rows={4}></textarea>
           </fieldset>
-          <div className="button__container"></div>
+          <div className="button__container">
+            <BlockButtonElement
+              name="ОК"
+              func={() => {
+                console.log('hello');
+              }}
+            />
+            <BlockButtonElement name="Отмена" func={onClose} />
+          </div>
         </form>
       </div>
     </div>,

@@ -33,7 +33,7 @@
 
 .modal__title {
   padding: 10px;
-  background-color: #cad4de;
+  background-color: var(--main-modalHeaderBackground-color);
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   color: var(--main-modalTitle-color);
@@ -41,6 +41,8 @@
 
 .modal__form {
   margin: 10px;
+  padding: 2px 5px;
+  border: 1px solid var(--main-buttonContainerBorder-color);
 }
 
 .accounts__modal__content fieldset {
@@ -84,4 +86,17 @@
   background-color: var(--main-inputBackground-color);
   border: 1px solid var(--main-line-color);
   border-radius: 3px;
+}
+
+.button__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  padding: 10px;
+  border: 1px solid var(--main-buttonContainerBorder-color);
+}
+
+.button__container button {
+  width: 100px;
 }

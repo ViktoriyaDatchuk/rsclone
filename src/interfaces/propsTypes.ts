@@ -1,3 +1,5 @@
+type VoidFunction = () => void;
+
 export interface HeaderButtonType {
   image: string;
   title: string;
@@ -14,12 +16,21 @@ export interface DropdownProps {
 }
 
 export interface BlockButtonProps {
-  onToggleAdd: () => void;
-  onToggleDel: () => void;
-  onToggleEdit: () => void;
+  onToggleAdd: VoidFunction;
+  onToggleDel: VoidFunction;
+  onToggleEdit: VoidFunction;
 }
 
 export interface BlockButtonElementProps {
   name: string;
-  func: () => void;
+  func: VoidFunction;
+}
+
+export interface ActionBlockProps extends BlockButtonProps {
+  children?: React.ReactElement | boolean;
+}
+
+export interface AccountsFormProps {
+  transaction: string;
+  onClose: VoidFunction;
 }

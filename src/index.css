@@ -8,6 +8,8 @@
   --main-modalTitle-color: #6d7278;
   --main-fieldsetBorder-color: #e4dede;
   --main-inputBackground-color: #fcfaf7;
+  --main-buttonContainerBorder-color: #748191;
+  --main-modalHeaderBackground-color: #cad4de;
 }
 html {
   height: 100%;
