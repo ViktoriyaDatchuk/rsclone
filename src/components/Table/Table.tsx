@@ -92,6 +92,7 @@ export function Table({
     <>
       <table className="Table">
         <thead
+          className="Table__head"
           onClick={(event) => {
             handleHeadClick(event);
           }}
@@ -101,7 +102,9 @@ export function Table({
               return (
                 <th
                   key={index}
-                  className={classNames(order, { active: sortingField === fieldProperties[index] })}
+                  className={classNames(order, 'Table__headCell', {
+                    active: sortingField === fieldProperties[index],
+                  })}
                   data-property={fieldProperties[index]}
                 >
                   {fieldName}
@@ -121,7 +124,11 @@ export function Table({
                 }}
               >
                 {Object.values(item).map((value, index) => {
-                  return <td key={index}>{value}</td>;
+                  return (
+                    <td className="Table__cell" key={index}>
+                      {value}
+                    </td>
+                  );
                 })}
               </tr>
             );
@@ -130,7 +137,11 @@ export function Table({
         <tfoot>
           <tr className="totalRow">
             {fieldProperties.map((fieldProperty) => {
-              return <td key={fieldProperty}>{fillFooter(fieldProperty)}</td>;
+              return (
+                <td className="Table__cell" key={fieldProperty}>
+                  {fillFooter(fieldProperty)}
+                </td>
+              );
             })}
           </tr>
         </tfoot>

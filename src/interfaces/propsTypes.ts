@@ -1,5 +1,6 @@
 import { Item } from '../components/Table/Table';
 import { Account } from './Account';
+import { type HTMLInputTypeAttribute } from "react";
 
 type VoidFunction = () => void;
 
@@ -15,7 +16,7 @@ export interface FooterProps {
 }
 
 export interface DropdownProps {
-  options: (string | JSX.Element)[];
+  options: string[] | JSX.Element[];
 }
 
 export interface BlockButtonProps {
@@ -40,4 +41,10 @@ export interface AccountsFormProps {
   onClose: VoidFunction;
   setAccount: (item: Account[]) => void;
   account: Account[];
+}
+
+export interface InputProps{
+   type: HTMLInputTypeAttribute,
+   state: string,
+   setState: React.Dispatch<React.SetStateAction<string>>
 }
