@@ -100,3 +100,10 @@
 .button__container button {
   width: 100px;
 }
+
+.error__message {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--main-error-color);
+  text-align: center;
+}

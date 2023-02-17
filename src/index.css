@@ -10,6 +10,7 @@
   --main-inputBackground-color: #fcfaf7;
   --main-buttonContainerBorder-color: #748191;
   --main-modalHeaderBackground-color: #cad4de;
+  --main-error-color: rgb(242, 51, 51);
 }
 html {
   height: 100%;

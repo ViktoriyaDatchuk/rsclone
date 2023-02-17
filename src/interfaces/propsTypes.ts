@@ -1,3 +1,6 @@
+import { Item } from '../components/Table/Table';
+import { Account } from './Account';
+
 type VoidFunction = () => void;
 
 export interface HeaderButtonType {
@@ -32,5 +35,9 @@ export interface ActionBlockProps extends BlockButtonProps {
 
 export interface AccountsFormProps {
   transaction: string;
+  selected: Item | undefined;
+  numberItems: number;
   onClose: VoidFunction;
+  setAccount: (item: Account[]) => void;
+  account: Account[];
 }

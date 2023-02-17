@@ -1,29 +1,87 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
 import ReactDOM from 'react-dom';
 import { Images } from '../../options/AccountIcons';
 import { getDate } from '../../utils/todayDate';
 import { BlockButtonElement } from '../ActionBlock/BlockButton/BlockButtonElement';
 import { Dropdown } from '../Dropdown/dropdown';
-import './AccountsForm.css';
 import type { AccountsFormProps } from '../../interfaces/propsTypes';
+import type { Account } from '../../interfaces/Account';
+import { AccountsTransaction } from '../../interfaces/interfaces';
+import './AccountsForm.css';
 
 const currency = 'Рубли';
 
 const portal = document.getElementById('portal') as HTMLElement;
 
-export const AccountsForm = ({ transaction, onClose }: AccountsFormProps): ReactElement => {
-  const [name, setName] = useState('');
+export const AccountsForm = ({
+  transaction,
+  selected,
+  numberItems,
+  onClose,
+  setAccount,
+  account,
+}: AccountsFormProps): ReactElement => {
+  const [name, setName] = useState(selected?.account || '');
+  const [number, setNumber] = useState(
+    String((selected as Account)?.id) ||
+      (numberItems !== 0 ? (account[numberItems - 1].id as number) + 1 : '1')
+  );
+  const [summ, setSumm] = useState(String((selected as Account)?.balance) || '0.00');
+  const [note, setNote] = useState('');
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (transaction === AccountsTransaction.Add) {
+      setName('');
+      setNumber(String(numberItems !== 0 ? (account[numberItems - 1].id as number) + 1 : '1'));
+      setSumm('0.00');
+    }
+  }, []);
+
+  const formSubmit = (event: React.FormEvent): void => {
+    event.preventDefault();
+
+    if (name.trim().length === 0) {
+      setError('Введите название счета');
+    }
+  };
+
+  const submitFunction = (): void => {
+    if (transaction === AccountsTransaction.Add) {
+      const NewAccount: Account = {
+        id: +number,
+        account: name,
+        consumption: 0,
+        income: 0,
+        other: 0,
+        balance: +summ,
+        note,
+      };
+      account.push(NewAccount);
+      setAccount(account);
+      localStorage.setItem('accounts', JSON.stringify(account));
+      onClose();
+    } else {
+      account.map((item) => {
+        if (item.id === (selected as Account).id) {
+          item.account = name;
+          item.balance = +summ;
+          item.note = note;
+        }
+        return item;
+      });
+      setAccount(account);
+      localStorage.setItem('accounts', JSON.stringify(account));
+      onClose();
+    }
+  };
+
   return ReactDOM.createPortal(
     <div className="accounts__modal">
       <div className="accounts__modal__content">
         <h4 className="modal__title">{transaction} счета</h4>
-        <form
-          className="modal__form"
-          onSubmit={(event) => {
-            event.preventDefault();
-          }}
-        >
+        <form className="modal__form" onSubmit={formSubmit}>
           <fieldset>
             <legend>Название счета</legend>
             <input
@@ -35,6 +93,7 @@ export const AccountsForm = ({ transaction, onClose }: AccountsFormProps): React
               placeholder="Например: наличные, счет в банке и т.п."
               className="input__accountName"
             ></input>
+            {error && <div className="error__message">{error}</div>}
           </fieldset>
           <fieldset className="halfWidtElement">
             <legend>Иконка счета</legend>
@@ -42,7 +101,26 @@ export const AccountsForm = ({ transaction, onClose }: AccountsFormProps): React
           </fieldset>
           <fieldset className="halfWidtElement">
             <legend>Порядковый номер счета</legend>
-            <input type="number" min={1}></input>
+            {transaction === AccountsTransaction.Add ? (
+              <input
+                type="number"
+                min={1}
+                value={number}
+                onChange={(event) => {
+                  setNumber(event.target.value);
+                }}
+              ></input>
+            ) : (
+              <input
+                disabled
+                type="number"
+                min={1}
+                value={number}
+                onChange={(event) => {
+                  setNumber(event.target.value);
+                }}
+              ></input>
+            )}
           </fieldset>
           <fieldset>
             <legend>Начальный баланс</legend>
@@ -59,7 +137,16 @@ export const AccountsForm = ({ transaction, onClose }: AccountsFormProps): React
                   <td>{currency}</td>
                   <td>{getDate()}</td>
                   <td>
-                    <input type="number" min={0.0} step={0.01} className="input__table"></input>
+                    <input
+                      type="number"
+                      min={0.0}
+                      step={0.01}
+                      value={summ}
+                      onChange={(event) => {
+                        setSumm(event.target.value);
+                      }}
+                      className="input__table"
+                    ></input>
                   </td>
                 </tr>
               </tbody>
@@ -67,15 +154,16 @@ export const AccountsForm = ({ transaction, onClose }: AccountsFormProps): React
           </fieldset>
           <fieldset>
             <legend>Примечание</legend>
-            <textarea rows={4}></textarea>
+            <textarea
+              rows={4}
+              value={note}
+              onChange={(event) => {
+                setNote(event.target.value);
+              }}
+            ></textarea>
           </fieldset>
           <div className="button__container">
-            <BlockButtonElement
-              name="ОК"
-              func={() => {
-                console.log('hello');
-              }}
-            />
+            <BlockButtonElement name="ОК" func={submitFunction} />
             <BlockButtonElement name="Отмена" func={onClose} />
           </div>
         </form>
