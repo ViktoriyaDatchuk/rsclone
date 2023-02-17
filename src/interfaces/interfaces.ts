@@ -7,6 +7,11 @@ export interface HeaderListType {
   'Банковские вклады': string[];
 }
 
+export enum AccountsTransaction {
+  Add = 'Добавление',
+  Change = 'Редактирование',
+}
+
 export interface UserFooter {
    name: string;
    link: string;

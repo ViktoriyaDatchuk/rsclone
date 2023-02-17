@@ -5,16 +5,18 @@ import type { Cost } from '../../interfaces/Cost';
 import type { Account } from '../../interfaces/Account';
 import type { Income } from '../../interfaces/Income';
 
-type Item = Cost | Account | Income;
+export type Item = Cost | Account | Income;
 
 export function Table({
   items,
   fieldNames,
   fieldProperties,
+  setSelected,
 }: {
   items: Item[];
   fieldNames: string[];
   fieldProperties: string[];
+  setSelected: (arg: Item) => void;
 }): JSX.Element {
   const [sortingField, setSortingField] = useState('');
   const [isAscending, setIsAscending] = useState(true);
@@ -43,6 +45,7 @@ export function Table({
   };
   const checkRow = (event: React.MouseEvent<HTMLTableRowElement, MouseEvent>): void => {
     (event.currentTarget as HTMLTableRowElement).classList.add('checked');
+    setSelected(items[+(event.currentTarget as HTMLTableRowElement).id]);
   };
 
   const order = classNames({ desc: !isAscending });
@@ -114,6 +117,7 @@ export function Table({
           {items.map((item, index) => {
             return (
               <tr
+                id={String(index)}
                 key={index}
                 onClick={(event) => {
                   checkRow(event);

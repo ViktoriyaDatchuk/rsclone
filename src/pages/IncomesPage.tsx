@@ -7,6 +7,7 @@ import { Incomes } from '../stubs/Incomes';
 
 export const IncomesPage = (): JSX.Element => {
   const [tempIncomes, setTempIncomes] = useState(Incomes);
+  const [selected, setSelected] = useState<Item>();
 
   const accounts = Incomes.map((income) => {
     return income.account;
@@ -25,6 +26,10 @@ export const IncomesPage = (): JSX.Element => {
     category: '',
     subcategory: '',
   });
+  
+   const updateSelected = (value: Item): void => {
+    setSelected(value);
+  };
 
   const applyFilter = (property: keyof Filter, value: string): void => {
     filter[property] = value;
@@ -64,6 +69,7 @@ export const IncomesPage = (): JSX.Element => {
           items={tempIncomes}
           fieldNames={IncomeHeader.fieldNames}
           fieldProperties={IncomeHeader.fieldProperties}
+          setSelected={updateSelected}
         />
       </div>
       <Filters

@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Filters } from '../components/Filters/Filters';
 import { Table } from '../components/Table/Table';
+import type { Item } from '../components/Table/Table';
 import { CostHeader } from '../interfaces/Cost';
 import type { Filter } from '../interfaces/Filter';
 import { Costs } from '../stubs/Costs';
 
 export const CostsPage = (): JSX.Element => {
   const [tempCosts, setTempCosts] = useState(Costs);
+  const [selected, setSelected] = useState<Item>();
 
   const accounts = Costs.map((cost) => {
     return cost.account;
@@ -25,6 +27,10 @@ export const CostsPage = (): JSX.Element => {
     category: '',
     subcategory: '',
   });
+  
+  const updateSelected = (value: Item): void => {
+    setSelected(value);
+  };
 
   const applyFilter = (property: keyof Filter, value: string): void => {
     filter[property] = value;
@@ -65,6 +71,7 @@ export const CostsPage = (): JSX.Element => {
           items={tempCosts}
           fieldNames={CostHeader.fieldNames}
           fieldProperties={CostHeader.fieldProperties}
+          setSelected={updateSelected}
         />
       </div>
       <Filters
