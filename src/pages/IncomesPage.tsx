@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Filters } from '../components/Filters/Filters';
 import { Table } from '../components/Table/Table';
+import type { Item } from '../components/Table/Table';
 import type { Filter } from '../interfaces/Filter';
 import { IncomeHeader } from '../interfaces/Income';
 import { Incomes } from '../stubs/Incomes';
@@ -26,8 +27,8 @@ export const IncomesPage = (): JSX.Element => {
     category: '',
     subcategory: '',
   });
-  
-   const updateSelected = (value: Item): void => {
+
+  const updateSelected = (value: Item): void => {
     setSelected(value);
   };
 
