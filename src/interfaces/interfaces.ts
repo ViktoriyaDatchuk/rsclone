@@ -6,3 +6,9 @@ export interface HeaderListType {
   Планирование: string[];
   'Банковские вклады': string[];
 }
+
+export interface UserFooter {
+   name: string;
+   link: string;
+   img: string;
+ }
