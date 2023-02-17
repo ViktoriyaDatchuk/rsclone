@@ -1,4 +1,4 @@
-import type { ReactElement } from 'react';
+import { type ReactElement, useState } from 'react';
 import { Header } from './components/Header/Header';
 import { Footer } from './components/footer/footer';
 import { Routes, Route } from 'react-router-dom';
@@ -16,6 +16,7 @@ function App(): ReactElement {
         <Route path="/costs" element={<CostsPage />} />
         <Route path="/incomes" element={<IncomesPage />} />
       </Routes>
+
 
       {/* <ActionsBlock /> */}
       <Footer />
