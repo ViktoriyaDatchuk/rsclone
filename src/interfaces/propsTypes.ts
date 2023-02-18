@@ -1,6 +1,6 @@
 import { Item } from '../components/Table/Table';
 import { Account } from './Account';
-import { type HTMLInputTypeAttribute } from "react";
+import { type HTMLInputTypeAttribute } from 'react';
 
 type VoidFunction = () => void;
 
@@ -27,7 +27,7 @@ export interface BlockButtonProps {
 
 export interface BlockButtonElementProps {
   name: string;
-  func: VoidFunction;
+  func: VoidFunction | ((event: React.FormEvent) => void);
 }
 
 export interface ActionBlockProps extends BlockButtonProps {
@@ -43,8 +43,8 @@ export interface AccountsFormProps {
   account: Account[];
 }
 
-export interface InputProps{
-   type: HTMLInputTypeAttribute,
-   state: string,
-   setState: React.Dispatch<React.SetStateAction<string>>
+export interface InputProps {
+  type: HTMLInputTypeAttribute;
+  state: string;
+  setState: React.Dispatch<React.SetStateAction<string>>;
 }

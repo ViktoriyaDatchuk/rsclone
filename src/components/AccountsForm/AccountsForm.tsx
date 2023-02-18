@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
 import ReactDOM from 'react-dom';
-import { Images } from '../../options/AccountIcons';
 import { getDate } from '../../utils/todayDate';
 import { BlockButtonElement } from '../ActionBlock/BlockButton/BlockButtonElement';
-import { Dropdown } from '../Dropdown/dropdown';
 import type { AccountsFormProps } from '../../interfaces/propsTypes';
 import type { Account } from '../../interfaces/Account';
 import { AccountsTransaction } from '../../interfaces/interfaces';
@@ -22,10 +20,9 @@ export const AccountsForm = ({
   setAccount,
   account,
 }: AccountsFormProps): ReactElement => {
-  const [name, setName] = useState(selected?.account || '');
+  const [name, setName] = useState(selected?.account ?? '');
   const [number, setNumber] = useState(
-    String((selected as Account)?.id) ||
-      (numberItems !== 0 ? (account[numberItems - 1].id as number) + 1 : '1')
+    String((selected as Account)?.id) || (numberItems !== 0 ? account[numberItems - 1].id + 1 : '1')
   );
   const [summ, setSumm] = useState(String((selected as Account)?.balance) || '0.00');
   const [note, setNote] = useState('');
@@ -34,46 +31,48 @@ export const AccountsForm = ({
   useEffect(() => {
     if (transaction === AccountsTransaction.Add) {
       setName('');
-      setNumber(String(numberItems !== 0 ? (account[numberItems - 1].id as number) + 1 : '1'));
+      setNumber(String(numberItems !== 0 ? account[numberItems - 1].id + 1 : '1'));
       setSumm('0.00');
     }
   }, []);
 
-  const formSubmit = (event: React.FormEvent): void => {
+  const cancelFunction = (event: React.FormEvent): void => {
     event.preventDefault();
-
-    if (name.trim().length === 0) {
-      setError('Введите название счета');
-    }
+    onClose();
   };
 
-  const submitFunction = (): void => {
-    if (transaction === AccountsTransaction.Add) {
-      const NewAccount: Account = {
-        id: +number,
-        account: name,
-        consumption: 0,
-        income: 0,
-        other: 0,
-        balance: +summ,
-        note,
-      };
-      account.push(NewAccount);
-      setAccount(account);
-      localStorage.setItem('accounts', JSON.stringify(account));
-      onClose();
+  const submitFunction = (event: React.FormEvent): void => {
+    event.preventDefault();
+    if (name.trim().length === 0) {
+      setError('Введите название счета');
     } else {
-      account.map((item) => {
-        if (item.id === (selected as Account).id) {
-          item.account = name;
-          item.balance = +summ;
-          item.note = note;
-        }
-        return item;
-      });
-      setAccount(account);
-      localStorage.setItem('accounts', JSON.stringify(account));
-      onClose();
+      if (transaction === AccountsTransaction.Add) {
+        const NewAccount: Account = {
+          id: +number,
+          account: name,
+          consumption: 0,
+          income: 0,
+          other: 0,
+          balance: +summ,
+          note,
+        };
+        account.push(NewAccount);
+        setAccount(account);
+        localStorage.setItem('accounts', JSON.stringify(account));
+        onClose();
+      } else {
+        account.map((item) => {
+          if (item.id === (selected as Account).id) {
+            item.account = name;
+            item.balance = +summ;
+            item.note = note;
+          }
+          return item;
+        });
+        setAccount(account);
+        localStorage.setItem('accounts', JSON.stringify(account));
+        onClose();
+      }
     }
   };
 
@@ -81,7 +80,7 @@ export const AccountsForm = ({
     <div className="accounts__modal">
       <div className="accounts__modal__content">
         <h4 className="modal__title">{transaction} счета</h4>
-        <form className="modal__form" onSubmit={formSubmit}>
+        <form className="modal__form">
           <fieldset>
             <legend>Название счета</legend>
             <input
@@ -96,31 +95,16 @@ export const AccountsForm = ({
             {error && <div className="error__message">{error}</div>}
           </fieldset>
           <fieldset className="halfWidtElement">
-            <legend>Иконка счета</legend>
-            <Dropdown options={Images} />
-          </fieldset>
-          <fieldset className="halfWidtElement">
             <legend>Порядковый номер счета</legend>
-            {transaction === AccountsTransaction.Add ? (
-              <input
-                type="number"
-                min={1}
-                value={number}
-                onChange={(event) => {
-                  setNumber(event.target.value);
-                }}
-              ></input>
-            ) : (
-              <input
-                disabled
-                type="number"
-                min={1}
-                value={number}
-                onChange={(event) => {
-                  setNumber(event.target.value);
-                }}
-              ></input>
-            )}
+            <input
+              disabled={transaction !== AccountsTransaction.Add}
+              type="number"
+              min={1}
+              value={number}
+              onChange={(event) => {
+                setNumber(event.target.value);
+              }}
+            ></input>
           </fieldset>
           <fieldset>
             <legend>Начальный баланс</legend>
@@ -164,7 +148,7 @@ export const AccountsForm = ({
           </fieldset>
           <div className="button__container">
             <BlockButtonElement name="ОК" func={submitFunction} />
-            <BlockButtonElement name="Отмена" func={onClose} />
+            <BlockButtonElement name="Отмена" func={cancelFunction} />
           </div>
         </form>
       </div>
