@@ -17,7 +17,6 @@ export function ActionsBlock({
         onToggleEdit={onToggleEdit}
       />
       {children}
-      {/* <BlockPopup onToggleAdd={onToggleAdd} onToggleDel={onToggleDel} onToggleEdit={onToggleEdit}  /> */}
     </div>
   );
 }
