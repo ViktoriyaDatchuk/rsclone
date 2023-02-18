@@ -12,5 +12,5 @@ export const HeaderList: HeaderListType = {
   Доходы: [Income, '/incomes'],
   'Кредиты и Долги': [Loans],
   Планирование: [Planning],
-  'Банковские вклады': [Contributions],
+  'Банковские вклады': [Contributions, '/deposit'],
 };
