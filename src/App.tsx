@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import { AccountsPage } from './pages/AccountsPage';
 import { CostsPage } from './pages/CostsPage';
 import { IncomesPage } from './pages/IncomesPage';
+import { DepositPage } from './pages/DepositPage';
 
 function App(): ReactElement {
   return (
@@ -14,6 +15,7 @@ function App(): ReactElement {
         <Route path="/" element={<AccountsPage />} />
         <Route path="/costs" element={<CostsPage />} />
         <Route path="/incomes" element={<IncomesPage />} />
+        <Route path="/deposit" element={<DepositPage />} />
       </Routes>
       <Footer />
     </div>

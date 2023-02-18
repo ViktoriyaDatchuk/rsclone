@@ -12,6 +12,13 @@
   --main-modalHeaderBackground-color: #cad4de;
   --main-error-color: rgb(242, 51, 51);
 }
+
+@font-face {
+  font-family: 'Spectral-BoldItalic';
+  src: local('Spectral-BoldItalic'),
+    url('./assets/fonts/Spectral-BoldItalic.ttf') format('truetype');
+}
+
 html {
   height: 100%;
 }
