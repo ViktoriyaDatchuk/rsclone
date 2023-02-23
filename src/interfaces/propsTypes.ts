@@ -1,6 +1,7 @@
-import { Item } from '../components/Table/Table';
-import { Account } from './Account';
+import type { Item } from '../components/Table/Table';
+import type { Account } from './Account';
 import { type HTMLInputTypeAttribute } from 'react';
+import type { ChartData, ChartOptions } from 'chart.js';
 
 type VoidFunction = () => void;
 
@@ -47,4 +48,9 @@ export interface InputProps {
   type: HTMLInputTypeAttribute;
   state: string;
   setState: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export interface PropsChart {
+  options: ChartOptions<'bar'>;
+  data: ChartData<'bar'>;
 }

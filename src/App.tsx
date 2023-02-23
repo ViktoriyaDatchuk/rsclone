@@ -6,6 +6,8 @@ import { AccountsPage } from './pages/AccountsPage';
 import { CostsPage } from './pages/CostsPage';
 import { IncomesPage } from './pages/IncomesPage';
 import { DepositPage } from './pages/DepositPage';
+// import { Chart } from './components/Chart/Chart';
+// import { options, data } from './components/Chart/ChartValue';
 
 function App(): ReactElement {
   return (
@@ -17,6 +19,7 @@ function App(): ReactElement {
         <Route path="/incomes" element={<IncomesPage />} />
         <Route path="/deposit" element={<DepositPage />} />
       </Routes>
+      {/* <Chart options={options} data={data} /> */}
       <Footer />
     </div>
   );
