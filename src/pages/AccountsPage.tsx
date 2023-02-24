@@ -24,7 +24,7 @@ export const AccountsPage = (): JSX.Element => {
   };
 
   return (
-    <div className="table-container">
+    <main className="table-container">
       <Table
         items={myAccounts}
         fieldNames={AccountHeader.fieldNames}
@@ -56,6 +56,6 @@ export const AccountsPage = (): JSX.Element => {
           />
         )}
       </ActionsBlock>
-    </div>
+    </main>
   );
 };

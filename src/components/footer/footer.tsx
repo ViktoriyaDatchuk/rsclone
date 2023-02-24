@@ -3,11 +3,9 @@ import { UsersFooter } from '../../options/UsersFooter';
 import type { ReactElement } from 'react';
 import './footer.css';
 
-
-
 export function Footer(): ReactElement {
   return (
-    <div className="footer">
+    <footer className="footer">
       <div>
         <FooterElement
           img={UsersFooter[0].img}
@@ -30,6 +28,6 @@ export function Footer(): ReactElement {
         link={UsersFooter[3].link}
         name={UsersFooter[3].name}
       />
-    </div>
+    </footer>
   );
 }

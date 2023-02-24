@@ -72,13 +72,24 @@
   width: 100%;
 }
 
+.modal__table {
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--main-line-color);
+  border-collapse: collapse;
+}
+
 .modal__table th {
   padding: 2px 20px;
+  background-color: var(--main-modalHeaderBackground-color);
+  border: 1px solid var(--main-buttonContainerBorder-color);
   position: static;
 }
 
 .modal__table td {
+  padding: 0 3px;
   background-color: var(--main-inputBackground-color);
+  border-left: 1px solid var(--main-buttonContainerBorder-color);
+  border-right: 1px solid var(--main-buttonContainerBorder-color);
 }
 
 .accounts__modal__content textarea {

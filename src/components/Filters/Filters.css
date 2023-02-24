@@ -20,7 +20,9 @@
 
 .filters__date,
 .filters__select {
-  border: 1px solid gainsboro;
+  border: 1px solid var(--main-line-color);
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
   width: fit-content;
   height: 30px;
   padding: 5px;
