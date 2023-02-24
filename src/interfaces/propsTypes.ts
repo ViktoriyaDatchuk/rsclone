@@ -38,10 +38,7 @@ export interface ActionBlockProps extends BlockButtonProps {
 export interface AccountsFormProps {
   transaction: string;
   selected: Item | undefined;
-  numberItems: number;
   onClose: VoidFunction;
-  setAccount: (item: Account[]) => void;
-  account: Account[];
 }
 
 export interface InputProps {
