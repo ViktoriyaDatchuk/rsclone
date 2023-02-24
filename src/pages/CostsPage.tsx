@@ -2,21 +2,23 @@ import { useState } from 'react';
 import { Filters } from '../components/Filters/Filters';
 import { Table } from '../components/Table/Table';
 import type { Item } from '../components/Table/Table';
-import { CostHeader } from '../interfaces/Cost';
+import { type Cost, CostHeader } from '../interfaces/Cost';
 import type { Filter } from '../interfaces/Filter';
-import { Costs } from '../stubs/Costs';
+import { ActionsBlock } from '../components/ActionBlock/ActionsBlock';
+import { TransactionForm } from '../components/TransactionsForm/TransactionsForm';
+import { costs, saveCosts } from '../store/CostsStore';
 
 export const CostsPage = (): JSX.Element => {
-  const [tempCosts, setTempCosts] = useState(Costs);
+  const [tempCosts, setTempCosts] = useState(costs);
   const [selected, setSelected] = useState<Item>();
+  const [isOpenForm, setIsOpenForm] = useState(false);
 
-  const accounts = Costs.map((cost) => {
-    return cost.account;
-  });
-  const categories = Costs.map((cost) => {
+  const accounts = JSON.parse(localStorage.getItem('accounts')!) ?? [];
+
+  const categories = costs.map((cost) => {
     return cost.category;
   });
-  const subCategories = Costs.map((cost) => {
+  const subCategories = costs.map((cost) => {
     return cost.subcategory;
   });
 
@@ -27,17 +29,32 @@ export const CostsPage = (): JSX.Element => {
     category: '',
     subcategory: '',
   });
-  
+
   const updateSelected = (value: Item): void => {
     setSelected(value);
+  };
+
+  const deleteCost = (selected: Cost): void => {
+    costs.forEach((cost, index) => {
+      if (JSON.stringify(cost) === JSON.stringify(selected)) {
+        costs.splice(index, 1);
+      }
+    });
+    saveCosts();
+    setTempCosts(
+      costs.filter((cost) => {
+        return JSON.stringify(cost) !== JSON.stringify(selected);
+      })
+    );
   };
 
   const applyFilter = (property: keyof Filter, value: string): void => {
     filter[property] = value;
     setFilter(filter);
-    const filteredCosts = Costs.filter((cost) => {
-      return filter.dateFrom !== '' ? new Date(cost.date) >= new Date(filter.dateFrom) : true;
-    })
+    const filteredCosts = costs
+      .filter((cost) => {
+        return filter.dateFrom !== '' ? new Date(cost.date) >= new Date(filter.dateFrom) : true;
+      })
       .filter((cost) => {
         return filter.dateTo !== '' ? new Date(cost.date) <= new Date(filter.dateTo) : true;
       })
@@ -61,7 +78,7 @@ export const CostsPage = (): JSX.Element => {
       category: '',
       subcategory: '',
     });
-    setTempCosts(Costs);
+    setTempCosts(costs);
   };
 
   return (
@@ -74,13 +91,35 @@ export const CostsPage = (): JSX.Element => {
           setSelected={updateSelected}
         />
       </div>
+      <ActionsBlock
+        onToggleAdd={() => {
+          setIsOpenForm(true);
+        }}
+        onToggleDel={() => {
+          deleteCost(selected as Cost);
+        }}
+        onToggleEdit={function (): void {
+          throw new Error('Function not implemented.');
+        }}
+      />
       <Filters
         categories={categories}
         subcategories={subCategories}
-        accounts={accounts}
+        accounts={costs.map((cost) => {
+          return cost.account;
+        })}
         applyFilter={applyFilter}
         resetCallBack={resetFilters}
       />
+      {isOpenForm && (
+        <TransactionForm
+          selected={selected}
+          availableAccounts={accounts}
+          closeForm={() => {
+            setIsOpenForm(false);
+          }}
+        />
+      )}
     </>
   );
 };
