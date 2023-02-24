@@ -3,7 +3,7 @@ import './DepositPage.css';
 
 export const DepositPage = (): JSX.Element => {
   return (
-    <div className="deposit">
+    <main className="deposit">
       <div className="deposit__smiley">
         <img src={Smiley} alt="Smiley" />
       </div>
@@ -16,6 +16,6 @@ export const DepositPage = (): JSX.Element => {
         </p>
         <p>Просим понять и простить :)</p>
       </div>
-    </div>
+    </main>
   );
 };

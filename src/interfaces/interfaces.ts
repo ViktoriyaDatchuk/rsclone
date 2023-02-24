@@ -3,7 +3,7 @@ export interface HeaderListType {
   Расходы: string[];
   Доходы: string[];
   'Кредиты и Долги': string[];
-  Планирование: string[];
+  Статистика: string[];
   'Банковские вклады': string[];
 }
 
@@ -13,7 +13,7 @@ export enum AccountsTransaction {
 }
 
 export interface UserFooter {
-   name: string;
-   link: string;
-   img: string;
- }
+  name: string;
+  link: string;
+  img: string;
+}
