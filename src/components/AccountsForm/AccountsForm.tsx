@@ -6,7 +6,9 @@ import { BlockButtonElement } from '../ActionBlock/BlockButton/BlockButtonElemen
 import type { AccountsFormProps } from '../../interfaces/propsTypes';
 import type { Account } from '../../interfaces/Account';
 import { AccountsTransaction } from '../../interfaces/interfaces';
+import { accounts } from '../../store/store';
 import './AccountsForm.css';
+import { maxNumber } from '../../utils/maxNumber';
 
 const currency = 'Рубли';
 
@@ -15,14 +17,11 @@ const portal = document.getElementById('portal') as HTMLElement;
 export const AccountsForm = ({
   transaction,
   selected,
-  numberItems,
   onClose,
-  setAccount,
-  account,
 }: AccountsFormProps): ReactElement => {
   const [name, setName] = useState(selected?.account ?? '');
   const [number, setNumber] = useState(
-    String((selected as Account)?.id) || (numberItems !== 0 ? account[numberItems - 1].id + 1 : '1')
+    String((selected as Account)?.id) || (accounts.length !== 0 ? maxNumber(accounts) + 1 : '1')
   );
   const [summ, setSumm] = useState(String((selected as Account)?.balance) || '0.00');
   const [note, setNote] = useState('');
@@ -31,7 +30,7 @@ export const AccountsForm = ({
   useEffect(() => {
     if (transaction === AccountsTransaction.Add) {
       setName('');
-      setNumber(String(numberItems !== 0 ? account[numberItems - 1].id + 1 : '1'));
+      setNumber(String(accounts.length !== 0 ? maxNumber(accounts) + 1 : '1'));
       setSumm('0.00');
     }
   }, []);
@@ -56,12 +55,10 @@ export const AccountsForm = ({
           balance: +summ,
           note,
         };
-        account.push(NewAccount);
-        setAccount(account);
-        localStorage.setItem('accounts', JSON.stringify(account));
+        accounts.push(NewAccount);
         onClose();
       } else {
-        account.map((item) => {
+        accounts.map((item) => {
           if (item.id === (selected as Account).id) {
             item.account = name;
             item.balance = +summ;
@@ -69,8 +66,6 @@ export const AccountsForm = ({
           }
           return item;
         });
-        setAccount(account);
-        localStorage.setItem('accounts', JSON.stringify(account));
         onClose();
       }
     }

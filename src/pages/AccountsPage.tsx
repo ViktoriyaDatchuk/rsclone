@@ -6,32 +6,27 @@ import type { Item } from '../components/Table/Table';
 import { AccountHeader } from '../interfaces/Account';
 import type { Account } from '../interfaces/Account';
 import { AccountsTransaction } from '../interfaces/interfaces';
+import { accounts, setAccounts } from '../store/store';
 import './Pages.css';
 
 export const AccountsPage = (): JSX.Element => {
   const [modal, setModal] = useState(false);
+  const [myAccounts, setMyAccounts] = useState(accounts);
   const [transaction, setTransaction] = useState(AccountsTransaction.Add);
-  const [account, setAccount] = useState<Account[]>(
-    JSON.parse(localStorage.getItem('accounts')!) ?? []
-  );
   const [selected, setSelected] = useState<Item>();
 
   useEffect(() => {
-    localStorage.setItem('accounts', JSON.stringify(account));
-  }, [account]);
+    setAccounts(myAccounts);
+  }, [myAccounts]);
 
   const updateSelected = (value: Item): void => {
     setSelected(value);
   };
 
-  const updateAccount = (value: Account[]): void => {
-    setAccount(value);
-  };
-
   return (
     <div className="table-container">
       <Table
-        items={account}
+        items={myAccounts}
         fieldNames={AccountHeader.fieldNames}
         fieldProperties={AccountHeader.fieldProperties}
         setSelected={updateSelected}
@@ -42,10 +37,10 @@ export const AccountsPage = (): JSX.Element => {
           setTransaction(AccountsTransaction.Add);
         }}
         onToggleDel={() => {
-          setAccount(account.filter((item) => item.id !== (selected as Account)?.id));
+          setMyAccounts(myAccounts.filter((item) => item.id !== (selected as Account)?.id));
         }}
         onToggleEdit={() => {
-          if (account.length !== 0) {
+          if (accounts.length !== 0) {
             setModal(true);
             setTransaction(AccountsTransaction.Change);
           }
@@ -55,12 +50,9 @@ export const AccountsPage = (): JSX.Element => {
           <AccountsForm
             transaction={transaction}
             selected={selected}
-            numberItems={account.length}
             onClose={() => {
               setModal(false);
             }}
-            setAccount={updateAccount}
-            account={account}
           />
         )}
       </ActionsBlock>
