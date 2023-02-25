@@ -5,10 +5,10 @@ import { BlockButtonElement } from '../ActionBlock/BlockButton/BlockButtonElemen
 import type { Item } from '../Table/Table';
 import './TransactionsForm.css';
 import expensesValue from '../../options/expensesValue';
-import { costs, saveCosts, updateSelectedCost } from '../../store/CostsStore';
+import { costs, updateSelectedCost } from '../../store/CostsStore';
 import type { Cost } from '../../interfaces/Cost';
 import type { Income } from '../../interfaces/Income';
-import { incomes, saveIncomes, updateSelectedIncome } from '../../store/IncomesStore';
+import { incomes, updateSelectedIncome } from '../../store/IncomesStore';
 
 const portal = document.getElementById('portal') as HTMLElement;
 
@@ -61,7 +61,6 @@ export const TransactionForm = ({
           requiredAccount.balance += amount - (selected as Income).amount;
         }
       }
-      saveIncomes();
     } else {
       if (!selected) {
         costs.push({ date, account, category, subcategory, quantity, unit, amount, note });
@@ -84,10 +83,7 @@ export const TransactionForm = ({
           requiredAccount.balance += (selected as Cost).amount - amount;
         }
       }
-      saveCosts();
     }
-
-    localStorage.setItem('accounts', JSON.stringify(availableAccounts));
 
     closeForm();
   };

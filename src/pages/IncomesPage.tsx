@@ -4,18 +4,17 @@ import { Table } from '../components/Table/Table';
 import type { Item } from '../components/Table/Table';
 import type { Filter } from '../interfaces/Filter';
 import { type Income, IncomeHeader } from '../interfaces/Income';
-// import { Incomes } from '../stubs/Incomes';
 import { TransactionForm } from '../components/TransactionsForm/TransactionsForm';
 import { ActionsBlock } from '../components/ActionBlock/ActionsBlock';
 import { deleteIncome, incomes } from '../store/IncomesStore';
 import type { Account } from '../interfaces/Account';
+import { accounts } from '../store/store';
 
 export const IncomesPage = (): JSX.Element => {
   const [tempIncomes, setTempIncomes] = useState(incomes);
   const [selected, setSelected] = useState<Item>();
   const [isOpenForm, setIsOpenForm] = useState(false);
 
-  const accounts = JSON.parse(localStorage.getItem('accounts')!) ?? [];
   const categories = Array.from(
     new Set(
       incomes.map((income) => {
@@ -97,10 +96,9 @@ export const IncomesPage = (): JSX.Element => {
             return acc.account === selected?.account;
           });
           if (requiredAccount !== undefined) {
-            (requiredAccount as Account).balance -= (selected as Income).amount;
-            (requiredAccount as Account).income -= (selected as Income).amount;
+            requiredAccount.balance -= (selected as Income).amount;
+            requiredAccount.income -= (selected as Income).amount;
           }
-          localStorage.setItem('accounts', JSON.stringify(accounts));
           deleteIncome(selected as Income);
           document.querySelectorAll('.checked').forEach((el) => {
             el.classList.remove('checked');

@@ -2,7 +2,23 @@ import type { Income } from '../interfaces/Income';
 
 export const incomes: Income[] = JSON.parse(localStorage.getItem('incomes')!) ?? [];
 
-export const saveIncomes = (): void => {
+export const deleteIncome = (selected: Income): void => {
+  incomes.forEach((cost, index) => {
+    if (JSON.stringify(cost) === JSON.stringify(selected)) {
+      incomes.splice(index, 1);
+    }
+  });
+};
+
+export const updateSelectedIncome = (selected: Income, updated: Income): void => {
+  incomes.forEach((income, index) => {
+    if (JSON.stringify(income) === JSON.stringify(selected)) {
+      incomes[index] = updated;
+    }
+  });
+};
+
+window.addEventListener('beforeunload', () => {
   localStorage.setItem(
     'incomes',
     JSON.stringify(
@@ -19,22 +35,4 @@ export const saveIncomes = (): void => {
       })
     )
   );
-};
-
-export const deleteIncome = (selected: Income): void => {
-  incomes.forEach((cost, index) => {
-    if (JSON.stringify(cost) === JSON.stringify(selected)) {
-      incomes.splice(index, 1);
-    }
-  });
-  saveIncomes();
-};
-
-export const updateSelectedIncome = (selected: Income, updated: Income): void => {
-  incomes.forEach((income, index) => {
-    if (JSON.stringify(income) === JSON.stringify(selected)) {
-      incomes[index] = updated;
-    }
-  });
-  saveIncomes();
-};
+});
