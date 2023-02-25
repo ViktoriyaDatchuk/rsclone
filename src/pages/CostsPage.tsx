@@ -8,13 +8,12 @@ import { ActionsBlock } from '../components/ActionBlock/ActionsBlock';
 import { TransactionForm } from '../components/TransactionsForm/TransactionsForm';
 import { costs, deleteCost } from '../store/CostsStore';
 import type { Account } from '../interfaces/Account';
+import { accounts } from '../store/store';
 
 export const CostsPage = (): JSX.Element => {
   const [tempCosts, setTempCosts] = useState(costs);
   const [selected, setSelected] = useState<Item>();
   const [isOpenForm, setIsOpenForm] = useState(false);
-
-  const accounts = JSON.parse(localStorage.getItem('accounts')!) ?? [];
 
   const categories = Array.from(
     new Set(
@@ -96,10 +95,9 @@ export const CostsPage = (): JSX.Element => {
             return acc.account === selected?.account;
           });
           if (requiredAccount !== undefined) {
-            (requiredAccount as Account).balance += (selected as Cost).amount;
-            (requiredAccount as Account).consumption -= (selected as Cost).amount;
+            requiredAccount.balance += (selected as Cost).amount;
+            requiredAccount.consumption -= (selected as Cost).amount;
           }
-          localStorage.setItem('accounts', JSON.stringify(accounts));
           deleteCost(selected as Cost);
           document.querySelectorAll('.checked').forEach((el) => {
             el.classList.remove('checked');
