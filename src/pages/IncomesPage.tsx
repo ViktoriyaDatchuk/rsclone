@@ -3,22 +3,35 @@ import { Filters } from '../components/Filters/Filters';
 import { Table } from '../components/Table/Table';
 import type { Item } from '../components/Table/Table';
 import type { Filter } from '../interfaces/Filter';
-import { IncomeHeader } from '../interfaces/Income';
-import { Incomes } from '../stubs/Incomes';
+import { type Income, IncomeHeader } from '../interfaces/Income';
+// import { Incomes } from '../stubs/Incomes';
+import { TransactionForm } from '../components/TransactionsForm/TransactionsForm';
+import { ActionsBlock } from '../components/ActionBlock/ActionsBlock';
+import { deleteIncome, incomes } from '../store/IncomesStore';
+import type { Account } from '../interfaces/Account';
 
 export const IncomesPage = (): JSX.Element => {
-  const [tempIncomes, setTempIncomes] = useState(Incomes);
+  const [tempIncomes, setTempIncomes] = useState(incomes);
   const [selected, setSelected] = useState<Item>();
+  const [isOpenForm, setIsOpenForm] = useState(false);
 
-  const accounts = Incomes.map((income) => {
-    return income.account;
-  });
-  const categories = Incomes.map((income) => {
-    return income.category;
-  });
-  const subCategories = Incomes.map((income) => {
-    return income.subcategory;
-  });
+  const accounts = JSON.parse(localStorage.getItem('accounts')!) ?? [];
+  const categories = Array.from(
+    new Set(
+      incomes.map((income) => {
+        return income.category;
+      })
+    )
+  );
+  const subCategories = Array.from(
+    new Set(
+      incomes.map((income) => {
+        return income.subcategory;
+      })
+    )
+  );
+
+  console.log(categories, subCategories);
 
   const [filter, setFilter] = useState({
     dateFrom: '',
@@ -35,9 +48,10 @@ export const IncomesPage = (): JSX.Element => {
   const applyFilter = (property: keyof Filter, value: string): void => {
     filter[property] = value;
     setFilter(filter);
-    const filteredIncomes = Incomes.filter((income) => {
-      return filter.dateFrom !== '' ? new Date(income.date) >= new Date(filter.dateFrom) : true;
-    })
+    const filteredIncomes = incomes
+      .filter((income) => {
+        return filter.dateFrom !== '' ? new Date(income.date) >= new Date(filter.dateFrom) : true;
+      })
       .filter((income) => {
         return filter.dateTo !== '' ? new Date(income.date) <= new Date(filter.dateTo) : true;
       })
@@ -61,7 +75,7 @@ export const IncomesPage = (): JSX.Element => {
       category: '',
       subcategory: '',
     });
-    setTempIncomes(Incomes);
+    setTempIncomes(incomes);
   };
   return (
     <>
@@ -73,13 +87,54 @@ export const IncomesPage = (): JSX.Element => {
           setSelected={updateSelected}
         />
       </div>
+      <ActionsBlock
+        onToggleAdd={() => {
+          setSelected(undefined);
+          setIsOpenForm(true);
+        }}
+        onToggleDel={() => {
+          const requiredAccount = accounts.find((acc: Account) => {
+            return acc.account === selected?.account;
+          });
+          if (requiredAccount !== undefined) {
+            (requiredAccount as Account).balance -= (selected as Income).amount;
+            (requiredAccount as Account).income -= (selected as Income).amount;
+          }
+          localStorage.setItem('accounts', JSON.stringify(accounts));
+          deleteIncome(selected as Income);
+          document.querySelectorAll('.checked').forEach((el) => {
+            el.classList.remove('checked');
+          });
+          resetFilters();
+          setSelected(undefined);
+        }}
+        onToggleEdit={() => {
+          selected && setIsOpenForm(true);
+        }}
+      />
       <Filters
-        accounts={accounts}
+        accounts={Array.from(
+          new Set(
+            incomes.map((income) => {
+              return income.account;
+            })
+          )
+        )}
         categories={categories}
         subcategories={subCategories}
         applyFilter={applyFilter}
         resetCallBack={resetFilters}
       />
+      {isOpenForm && (
+        <TransactionForm
+          selected={selected}
+          availableAccounts={accounts}
+          closeForm={() => {
+            setIsOpenForm(false);
+          }}
+          isIncomeForm={true}
+        />
+      )}
     </>
   );
 };

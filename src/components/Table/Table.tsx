@@ -44,6 +44,9 @@ export function Table({
     setSortingField(String(field));
   };
   const checkRow = (event: React.MouseEvent<HTMLTableRowElement, MouseEvent>): void => {
+    document.querySelectorAll('.checked').forEach((el) => {
+      el.classList.remove('checked');
+    });
     (event.currentTarget as HTMLTableRowElement).classList.add('checked');
     setSelected(items[+(event.currentTarget as HTMLTableRowElement).id]);
   };
