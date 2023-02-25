@@ -5,7 +5,10 @@ import { BlockButtonElement } from '../ActionBlock/BlockButton/BlockButtonElemen
 import type { Item } from '../Table/Table';
 import './TransactionsForm.css';
 import expensesValue from '../../options/expensesValue';
-import { costs, saveCosts } from '../../store/CostsStore';
+import { costs, saveCosts, updateSelectedCost } from '../../store/CostsStore';
+import type { Cost } from '../../interfaces/Cost';
+import type { Income } from '../../interfaces/Income';
+import { incomes, saveIncomes, updateSelectedIncome } from '../../store/IncomesStore';
 
 const portal = document.getElementById('portal') as HTMLElement;
 
@@ -13,10 +16,12 @@ export const TransactionForm = ({
   selected,
   availableAccounts,
   closeForm,
+  isIncomeForm,
 }: {
   selected?: Item;
   availableAccounts?: Account[];
   closeForm: () => void;
+  isIncomeForm?: boolean;
 }): ReactElement => {
   const submit = (): void => {
     const form = document.querySelector('.transaction__form') as HTMLFormElement;
@@ -30,15 +35,67 @@ export const TransactionForm = ({
     const amount = +(formData.get('amount') as string);
     const note = formData.get('note') as string;
 
-    costs.push({ date, account, category, subcategory, quantity, unit, amount, note });
-    saveCosts();
+    const requiredAccount = availableAccounts?.find((acc) => {
+      return acc.account === account;
+    });
+
+    if (isIncomeForm) {
+      if (!selected) {
+        incomes.push({ date, account, category, subcategory, quantity, unit, amount, note });
+        if (requiredAccount !== undefined) {
+          requiredAccount.balance += amount;
+          requiredAccount.income += amount;
+        }
+      } else {
+        updateSelectedIncome(selected as Income, {
+          date,
+          account,
+          category,
+          subcategory,
+          quantity,
+          unit,
+          amount,
+          note,
+        });
+        if (requiredAccount !== undefined) {
+          requiredAccount.balance += amount - (selected as Income).amount;
+        }
+      }
+      saveIncomes();
+    } else {
+      if (!selected) {
+        costs.push({ date, account, category, subcategory, quantity, unit, amount, note });
+        if (requiredAccount !== undefined) {
+          requiredAccount.consumption += amount;
+          requiredAccount.balance -= amount;
+        }
+      } else {
+        updateSelectedCost(selected as Cost, {
+          date,
+          account,
+          category,
+          subcategory,
+          quantity,
+          unit,
+          amount,
+          note,
+        });
+        if (requiredAccount !== undefined) {
+          requiredAccount.balance += (selected as Cost).amount - amount;
+        }
+      }
+      saveCosts();
+    }
+
+    localStorage.setItem('accounts', JSON.stringify(availableAccounts));
+
     closeForm();
   };
 
   return ReactDOM.createPortal(
     <div className="transaction__modal">
       <div className="transaction__card">
-        <h4 className="modal__title">Карточка расхода</h4>
+        <h4 className="modal__title">{isIncomeForm ? 'Карточка дохода' : 'Карточка расхода'}</h4>
 
         <form className="transaction__form">
           <label className="transaction__label">
@@ -47,12 +104,19 @@ export const TransactionForm = ({
               type="date"
               name="date"
               className="transaction__date"
-              defaultValue={new Date().toLocaleDateString().split('.').reverse().join('-')}
+              defaultValue={
+                (selected && (selected as Cost | Income).date.split('-').reverse().join('-')) ??
+                new Date().toLocaleDateString().split('.').reverse().join('-')
+              }
             />
           </label>
           <label className="transaction__label">
-            Списать со счета{' '}
-            <select name="account" className="transaction__account">
+            {isIncomeForm ? 'Занести на счет' : 'Списать со счета'}
+            <select
+              name="account"
+              className="transaction__account"
+              defaultValue={(selected && (selected as Cost | Income).account) ?? ''}
+            >
               {availableAccounts?.map((account, index) => {
                 return (
                   <option key={index} value={account.account}>
@@ -64,7 +128,11 @@ export const TransactionForm = ({
           </label>
           <label className="transaction__label">
             Категория
-            <select name="category" className="transaction__category">
+            <select
+              name="category"
+              className="transaction__category"
+              defaultValue={(selected && (selected as Cost | Income).category) ?? ''}
+            >
               <option value=""></option>
               {expensesValue.map((category, index) => {
                 return (
@@ -77,20 +145,47 @@ export const TransactionForm = ({
           </label>
           <label className="transaction__label">
             Подкатегория
-            <input type="text" name="subcategory" className="transaction__subcategory"></input>
+            <input
+              type="text"
+              name="subcategory"
+              className="transaction__subcategory"
+              defaultValue={(selected && (selected as Cost | Income).subcategory) ?? ''}
+            ></input>
           </label>
           <label className="transaction__label">
             Сумма
-            <input type="number" name="amount" className="transaction__amount" step={0.01}></input>
+            <input
+              type="number"
+              name="amount"
+              className="transaction__amount"
+              step={0.01}
+              defaultValue={(selected && (selected as Cost | Income).amount) ?? ''}
+            ></input>
           </label>
           <label className="transaction__label">
             Количество
-            <input type="number" name="quantity" className="transaction__quantity" step={1} />
-            <input type="text" name="unit" className="transaction__unit" placeholder="единиц" />
+            <input
+              type="number"
+              name="quantity"
+              className="transaction__quantity"
+              step={1}
+              defaultValue={(selected && (selected as Cost | Income).quantity) ?? ''}
+            />
+            <input
+              type="text"
+              name="unit"
+              className="transaction__unit"
+              placeholder="единиц"
+              defaultValue={(selected && (selected as Cost | Income).unit) ?? ''}
+            />
           </label>
           <label className="transaction__label">
             Примечание
-            <textarea name="note" className="transaction__note"></textarea>
+            <textarea
+              name="note"
+              className="transaction__note"
+              defaultValue={(selected && (selected as Cost | Income).note) ?? ''}
+            ></textarea>
           </label>
         </form>
         <div className="transaction__button-container">

@@ -20,3 +20,21 @@ export const saveCosts = (): void => {
     )
   );
 };
+
+export const deleteCost = (selected: Cost): void => {
+  costs.forEach((cost, index) => {
+    if (JSON.stringify(cost) === JSON.stringify(selected)) {
+      costs.splice(index, 1);
+    }
+  });
+  saveCosts();
+};
+
+export const updateSelectedCost = (selected: Cost, updated: Cost): void => {
+  costs.forEach((cost, index) => {
+    if (JSON.stringify(cost) === JSON.stringify(selected)) {
+      costs[index] = updated;
+    }
+  });
+  saveCosts();
+};

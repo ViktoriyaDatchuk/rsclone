@@ -6,7 +6,8 @@ import { type Cost, CostHeader } from '../interfaces/Cost';
 import type { Filter } from '../interfaces/Filter';
 import { ActionsBlock } from '../components/ActionBlock/ActionsBlock';
 import { TransactionForm } from '../components/TransactionsForm/TransactionsForm';
-import { costs, saveCosts } from '../store/CostsStore';
+import { costs, deleteCost } from '../store/CostsStore';
+import type { Account } from '../interfaces/Account';
 
 export const CostsPage = (): JSX.Element => {
   const [tempCosts, setTempCosts] = useState(costs);
@@ -15,12 +16,20 @@ export const CostsPage = (): JSX.Element => {
 
   const accounts = JSON.parse(localStorage.getItem('accounts')!) ?? [];
 
-  const categories = costs.map((cost) => {
-    return cost.category;
-  });
-  const subCategories = costs.map((cost) => {
-    return cost.subcategory;
-  });
+  const categories = Array.from(
+    new Set(
+      costs.map((cost) => {
+        return cost.category;
+      })
+    )
+  );
+  const subCategories = Array.from(
+    new Set(
+      costs.map((cost) => {
+        return cost.subcategory;
+      })
+    )
+  );
 
   const [filter, setFilter] = useState({
     dateFrom: '',
@@ -32,20 +41,6 @@ export const CostsPage = (): JSX.Element => {
 
   const updateSelected = (value: Item): void => {
     setSelected(value);
-  };
-
-  const deleteCost = (selected: Cost): void => {
-    costs.forEach((cost, index) => {
-      if (JSON.stringify(cost) === JSON.stringify(selected)) {
-        costs.splice(index, 1);
-      }
-    });
-    saveCosts();
-    setTempCosts(
-      costs.filter((cost) => {
-        return JSON.stringify(cost) !== JSON.stringify(selected);
-      })
-    );
   };
 
   const applyFilter = (property: keyof Filter, value: string): void => {
@@ -93,21 +88,40 @@ export const CostsPage = (): JSX.Element => {
       </div>
       <ActionsBlock
         onToggleAdd={() => {
+          setSelected(undefined);
           setIsOpenForm(true);
         }}
         onToggleDel={() => {
+          const requiredAccount = accounts.find((acc: Account) => {
+            return acc.account === selected?.account;
+          });
+          if (requiredAccount !== undefined) {
+            (requiredAccount as Account).balance += (selected as Cost).amount;
+            (requiredAccount as Account).consumption -= (selected as Cost).amount;
+          }
+          localStorage.setItem('accounts', JSON.stringify(accounts));
           deleteCost(selected as Cost);
+          document.querySelectorAll('.checked').forEach((el) => {
+            el.classList.remove('checked');
+          });
+          resetFilters();
+          setSelected(undefined);
         }}
-        onToggleEdit={function (): void {
-          throw new Error('Function not implemented.');
+        onToggleEdit={() => {
+          selected && setIsOpenForm(true);
+          resetFilters();
         }}
       />
       <Filters
         categories={categories}
         subcategories={subCategories}
-        accounts={costs.map((cost) => {
-          return cost.account;
-        })}
+        accounts={Array.from(
+          new Set(
+            costs.map((cost) => {
+              return cost.account;
+            })
+          )
+        )}
         applyFilter={applyFilter}
         resetCallBack={resetFilters}
       />
