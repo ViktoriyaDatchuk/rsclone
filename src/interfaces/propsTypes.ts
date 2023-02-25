@@ -51,3 +51,8 @@ export interface PropsChart {
   options: ChartOptions<'bar'>;
   data: ChartData<'bar'>;
 }
+
+export interface PropsChartLine {
+   options: ChartOptions<'line'>;
+   data: ChartData<'line'>;
+ }
