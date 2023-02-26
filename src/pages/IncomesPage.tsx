@@ -49,10 +49,16 @@ export const IncomesPage = (): JSX.Element => {
     setFilter(filter);
     const filteredIncomes = incomes
       .filter((income) => {
-        return filter.dateFrom !== '' ? new Date(income.date) >= new Date(filter.dateFrom) : true;
+        return filter.dateFrom !== ''
+          ? new Date(income.date.split('-').reverse().join('-')) >=
+              new Date(filter.dateFrom.split('-').reverse().join('-'))
+          : true;
       })
       .filter((income) => {
-        return filter.dateTo !== '' ? new Date(income.date) <= new Date(filter.dateTo) : true;
+        return filter.dateTo !== ''
+          ? new Date(income.date.split('-').reverse().join('-')) <=
+              new Date(filter.dateTo.split('-').reverse().join('-'))
+          : true;
       })
       .filter((income) => {
         return filter.account !== '' ? income.account === filter.account : true;

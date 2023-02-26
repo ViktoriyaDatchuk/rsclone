@@ -47,10 +47,16 @@ export const CostsPage = (): JSX.Element => {
     setFilter(filter);
     const filteredCosts = costs
       .filter((cost) => {
-        return filter.dateFrom !== '' ? new Date(cost.date) >= new Date(filter.dateFrom) : true;
+        return filter.dateFrom !== ''
+          ? new Date(cost.date.split('-').reverse().join('-')) >=
+              new Date(filter.dateFrom.split('-').reverse().join('-'))
+          : true;
       })
       .filter((cost) => {
-        return filter.dateTo !== '' ? new Date(cost.date) <= new Date(filter.dateTo) : true;
+        return filter.dateTo !== ''
+          ? new Date(cost.date.split('-').reverse().join('-')) <=
+              new Date(filter.dateTo.split('-').reverse().join('-'))
+          : true;
       })
       .filter((cost) => {
         return filter.account !== '' ? cost.account === filter.account : true;
