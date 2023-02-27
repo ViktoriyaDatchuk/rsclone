@@ -8,7 +8,7 @@ import { ActionsBlock } from '../components/ActionBlock/ActionsBlock';
 import { TransactionForm } from '../components/TransactionsForm/TransactionsForm';
 import { costs, deleteCost } from '../store/CostsStore';
 import type { Account } from '../interfaces/Account';
-import { accounts } from '../store/store';
+import { accounts } from '../store/AccountsStore';
 
 export const CostsPage = (): JSX.Element => {
   const [tempCosts, setTempCosts] = useState(costs);

@@ -6,9 +6,9 @@ import { BlockButtonElement } from '../ActionBlock/BlockButton/BlockButtonElemen
 import type { AccountsFormProps } from '../../interfaces/propsTypes';
 import type { Account } from '../../interfaces/Account';
 import { AccountsTransaction } from '../../interfaces/interfaces';
-import { accounts } from '../../store/store';
-import './AccountsForm.css';
+import { accounts } from '../../store/AccountsStore';
 import { maxNumber } from '../../utils/maxNumber';
+import './AccountsForm.css';
 
 const currency = 'Рубли';
 

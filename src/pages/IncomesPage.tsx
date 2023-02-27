@@ -8,7 +8,7 @@ import { TransactionForm } from '../components/TransactionsForm/TransactionsForm
 import { ActionsBlock } from '../components/ActionBlock/ActionsBlock';
 import { deleteIncome, incomes } from '../store/IncomesStore';
 import type { Account } from '../interfaces/Account';
-import { accounts } from '../store/store';
+import { accounts } from '../store/AccountsStore';
 
 export const IncomesPage = (): JSX.Element => {
   const [tempIncomes, setTempIncomes] = useState(incomes);
@@ -29,8 +29,6 @@ export const IncomesPage = (): JSX.Element => {
       })
     )
   );
-
-  console.log(categories, subCategories);
 
   const [filter, setFilter] = useState({
     dateFrom: '',
