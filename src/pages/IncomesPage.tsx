@@ -9,6 +9,8 @@ import { ActionsBlock } from '../components/ActionBlock/ActionsBlock';
 import { deleteIncome, incomes } from '../store/IncomesStore';
 import type { Account } from '../interfaces/Account';
 import { accounts } from '../store/AccountsStore';
+import { statisticsIncomes } from '../store/StatisticsStore';
+import MonthsList from '../options/MonthsList';
 
 export const IncomesPage = (): JSX.Element => {
   const [tempIncomes, setTempIncomes] = useState(incomes);
@@ -103,6 +105,9 @@ export const IncomesPage = (): JSX.Element => {
             requiredAccount.balance -= (selected as Income).amount;
             requiredAccount.income -= (selected as Income).amount;
           }
+          statisticsIncomes[MonthsList[+(selected as Income).date.slice(3, 5) - 1]][
+            +(selected as Income).date.slice(0, 2) - 1
+          ] -= (selected as Income).amount;
           deleteIncome(selected as Income);
           document.querySelectorAll('.checked').forEach((el) => {
             el.classList.remove('checked');

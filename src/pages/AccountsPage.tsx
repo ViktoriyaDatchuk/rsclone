@@ -24,13 +24,15 @@ export const AccountsPage = (): JSX.Element => {
   };
 
   return (
-    <main className="table-container">
-      <Table
-        items={myAccounts}
-        fieldNames={AccountHeader.fieldNames}
-        fieldProperties={AccountHeader.fieldProperties}
-        setSelected={updateSelected}
-      />
+    <main className="main__container">
+      <div className="table-container">
+        <Table
+          items={myAccounts}
+          fieldNames={AccountHeader.fieldNames}
+          fieldProperties={AccountHeader.fieldProperties}
+          setSelected={updateSelected}
+        />
+      </div>
       <ActionsBlock
         onToggleAdd={() => {
           setModal(true);

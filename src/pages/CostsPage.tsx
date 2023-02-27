@@ -9,6 +9,8 @@ import { TransactionForm } from '../components/TransactionsForm/TransactionsForm
 import { costs, deleteCost } from '../store/CostsStore';
 import type { Account } from '../interfaces/Account';
 import { accounts } from '../store/AccountsStore';
+import { statisticsExpenses } from '../store/StatisticsStore';
+import MonthsList from '../options/MonthsList';
 
 export const CostsPage = (): JSX.Element => {
   const [tempCosts, setTempCosts] = useState(costs);
@@ -104,6 +106,9 @@ export const CostsPage = (): JSX.Element => {
             requiredAccount.balance += (selected as Cost).amount;
             requiredAccount.consumption -= (selected as Cost).amount;
           }
+          statisticsExpenses[MonthsList[+(selected as Cost).date.slice(3, 5) - 1]][
+            +(selected as Cost).date.slice(0, 2) - 1
+          ] -= (selected as Cost).amount;
           deleteCost(selected as Cost);
           document.querySelectorAll('.checked').forEach((el) => {
             el.classList.remove('checked');

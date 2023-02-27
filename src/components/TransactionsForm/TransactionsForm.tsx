@@ -10,6 +10,8 @@ import type { Cost } from '../../interfaces/Cost';
 import type { Income } from '../../interfaces/Income';
 import { incomes, updateSelectedIncome } from '../../store/IncomesStore';
 import IncomeValue from '../../options/IncomeValue';
+import { statisticsExpenses, statisticsIncomes } from '../../store/StatisticsStore';
+import MonthsList from '../../options/MonthsList';
 
 const portal = document.getElementById('portal') as HTMLElement;
 
@@ -47,7 +49,11 @@ export const TransactionForm = ({
           requiredAccount.balance += amount;
           requiredAccount.income += amount;
         }
+        statisticsIncomes[MonthsList[+date.slice(3, 5) - 1]][+date.slice(0, 2) - 1] += amount;
       } else {
+        statisticsIncomes[MonthsList[+(selected as Income).date.slice(3, 5) - 1]][
+          +(selected as Income).date.slice(0, 2) - 1
+        ] -= (selected as Income).amount;
         updateSelectedIncome(selected as Income, {
           date,
           account,
@@ -58,6 +64,7 @@ export const TransactionForm = ({
           amount,
           note,
         });
+        statisticsIncomes[MonthsList[+date.slice(3, 5) - 1]][+date.slice(0, 2) - 1] += amount;
         if (requiredAccount !== undefined) {
           requiredAccount.balance += amount - (selected as Income).amount;
         }
@@ -69,7 +76,11 @@ export const TransactionForm = ({
           requiredAccount.consumption += amount;
           requiredAccount.balance -= amount;
         }
+        statisticsExpenses[MonthsList[+date.slice(3, 5) - 1]][+date.slice(0, 2) - 1] += amount;
       } else {
+        statisticsExpenses[MonthsList[+(selected as Cost).date.slice(3, 5) - 1]][
+          +(selected as Cost).date.slice(0, 2) - 1
+        ] -= (selected as Cost).amount;
         updateSelectedCost(selected as Cost, {
           date,
           account,
@@ -80,6 +91,7 @@ export const TransactionForm = ({
           amount,
           note,
         });
+        statisticsExpenses[MonthsList[+date.slice(3, 5) - 1]][+date.slice(0, 2) - 1] += amount;
         if (requiredAccount !== undefined) {
           requiredAccount.balance += (selected as Cost).amount - amount;
         }
