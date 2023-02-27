@@ -6,7 +6,7 @@ import type { Item } from '../components/Table/Table';
 import { AccountHeader } from '../interfaces/Account';
 import type { Account } from '../interfaces/Account';
 import { AccountsTransaction } from '../interfaces/interfaces';
-import { accounts, setAccounts } from '../store/store';
+import { accounts, setAccounts } from '../store/AccountsStore';
 import './Pages.css';
 
 export const AccountsPage = (): JSX.Element => {

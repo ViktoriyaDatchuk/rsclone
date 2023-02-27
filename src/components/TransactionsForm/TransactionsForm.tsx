@@ -9,6 +9,7 @@ import { costs, updateSelectedCost } from '../../store/CostsStore';
 import type { Cost } from '../../interfaces/Cost';
 import type { Income } from '../../interfaces/Income';
 import { incomes, updateSelectedIncome } from '../../store/IncomesStore';
+import IncomeValue from '../../options/IncomeValue';
 
 const portal = document.getElementById('portal') as HTMLElement;
 
@@ -130,13 +131,21 @@ export const TransactionForm = ({
               defaultValue={(selected && (selected as Cost | Income).category) ?? ''}
             >
               <option value=""></option>
-              {expensesValue.map((category, index) => {
-                return (
-                  <option key={index} value={category}>
-                    {category}
-                  </option>
-                );
-              })}
+              {isIncomeForm
+                ? IncomeValue.map((category, index) => {
+                    return (
+                      <option key={index} value={category}>
+                        {category}
+                      </option>
+                    );
+                  })
+                : expensesValue.map((category, index) => {
+                    return (
+                      <option key={index} value={category}>
+                        {category}
+                      </option>
+                    );
+                  })}
             </select>
           </label>
           <label className="transaction__label">
