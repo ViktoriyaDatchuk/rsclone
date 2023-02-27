@@ -2,7 +2,6 @@ export interface HeaderListType {
   [Счета: string]: string[];
   Расходы: string[];
   Доходы: string[];
-  'Кредиты и Долги': string[];
   Статистика: string[];
   'Банковские вклады': string[];
 }
