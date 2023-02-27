@@ -31,6 +31,10 @@
   transition: 0.3s;
 }
 
+.accounts__modal__content input[type='date'] {
+  cursor: pointer;
+}
+
 .modal__title {
   padding: 10px;
   background-color: var(--main-modalHeaderBackground-color);
