@@ -18,7 +18,7 @@ export const HeaderButton = ({ image, title }: HeaderButtonType): ReactElement =
     <button
       id={title}
       className={classNames('header__button', {
-        'header__button-activ': location.pathname === HeaderList[title][1],
+        'header__button-activ': location.hash.slice(1) === HeaderList[title][1],
       })}
       onClick={buttonClickHandler}
     >
