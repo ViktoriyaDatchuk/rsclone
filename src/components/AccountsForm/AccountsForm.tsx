@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
 import ReactDOM from 'react-dom';
-import { getDate } from '../../utils/todayDate';
 import { BlockButtonElement } from '../ActionBlock/BlockButton/BlockButtonElement';
 import type { AccountsFormProps } from '../../interfaces/propsTypes';
 import type { Account } from '../../interfaces/Account';
@@ -23,6 +22,7 @@ export const AccountsForm = ({
   const [number, setNumber] = useState(
     String((selected as Account)?.id) || (accounts.length !== 0 ? maxNumber(accounts) + 1 : '1')
   );
+  const [date, setDate] = useState(new Date().toLocaleDateString().split('.').reverse().join('-'));
   const [summ, setSumm] = useState(String((selected as Account)?.balance) || '0.00');
   const [note, setNote] = useState('');
   const [error, setError] = useState('');
@@ -114,7 +114,16 @@ export const AccountsForm = ({
               <tbody>
                 <tr>
                   <td>{currency}</td>
-                  <td>{getDate()}</td>
+                  <td>
+                    <input
+                      type="date"
+                      value={date}
+                      onChange={(event) => {
+                        setDate(event.target.value);
+                      }}
+                      className="input__table"
+                    ></input>
+                  </td>
                   <td>
                     <input
                       type="number"
