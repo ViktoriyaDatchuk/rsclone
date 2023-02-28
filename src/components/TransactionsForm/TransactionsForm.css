@@ -1,0 +1,81 @@
+.transaction__modal {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  left: 0;
+  top: 0;
+  width: 100vw;
+  min-height: 100vh;
+  transition: 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.transaction__card {
+  border-radius: 10px;
+  width: 580px;
+  background-color: var(--main-background-color);
+}
+
+.transaction__form {
+  margin: 10px;
+  padding: 2px 5px;
+  border: 1px solid var(--main-buttonContainerBorder-color);
+}
+
+.transaction__date,
+.transaction__account,
+.transaction__category,
+.transaction__subcategory,
+.transaction__amount {
+  display: inline-block;
+  width: 255px;
+  height: 25px;
+  margin-left: 10px;
+  font-size: inherit;
+}
+
+.transaction__label {
+  display: block;
+  width: fit-content;
+  margin: 15px auto;
+  text-align: right;
+  font-size: 16px;
+  margin-right: 130px;
+}
+
+.transaction__quantity {
+  width: 170px;
+}
+.transaction__unit {
+  width: 75px;
+  text-align: center;
+}
+
+.transaction__quantity,
+.transaction__unit {
+  margin-left: 10px;
+  height: 25px;
+  font-size: inherit;
+}
+
+.transaction__note {
+  width: 255px;
+  max-width: 255px;
+  margin-left: 10px;
+  font-size: inherit;
+  resize: none;
+  min-height: 100px;
+}
+
+.transaction__button-container {
+  display: flex;
+  flex-direction: row;
+  column-gap: 55px;
+  width: fit-content;
+  margin: 15px 145px 15px auto;
+}
+
+.transaction__button-container button {
+  width: 100px;
+}

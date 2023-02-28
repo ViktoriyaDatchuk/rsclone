@@ -1,0 +1,67 @@
+* {
+  box-sizing: border-box;
+  --main-background-color: #efedeb;
+  --main-activElementBackground-color: #e0ebf7;
+  --main-activElemrntBorder-color: #98c7f9;
+  --main-text-color: #1c2732;
+  --main-line-color: #b3bbc4;
+  --main-modalTitle-color: #6d7278;
+  --main-fieldsetBorder-color: #e4dede;
+  --main-inputBackground-color: #fcfaf7;
+  --main-buttonContainerBorder-color: #748191;
+  --main-modalHeaderBackground-color: #cad4de;
+  --main-error-color: rgb(242, 51, 51);
+}
+
+@font-face {
+  font-family: 'Spectral-BoldItalic';
+  src: local('Spectral-BoldItalic'),
+    url('./assets/fonts/Spectral-BoldItalic.ttf') format('truetype');
+}
+
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--main-background-color);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+h1,
+h4 {
+  margin: 0;
+}
+
+#root {
+  height: 100%;
+}
+
+main {
+  flex: 1 1 auto;
+}
+
+.App {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.table-container,
+.statistics__container {
+  flex: 1 1 auto;
+  padding: 2px;
+  background-color: rgba(255, 255, 255, 0.4);
+  overflow-y: scroll;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+}

@@ -1,0 +1,8 @@
+.actions-block {
+  display: flex;
+  text-align: center;
+  justify-content: flex-start;
+  padding: 10px;
+  border: 1px solid var(--main-line-color);
+  gap: 10px;
+}

@@ -1,0 +1,32 @@
+.dropdown {
+  width: 100%;
+  user-select: none;
+  position: relative;
+}
+.dropdown .dropdown-btn {
+  padding: 5px 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: space-between;
+  background-color: var(--main-inputBackground-color);
+
+}
+
+.dropdown .dropdown-content {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  padding: 10px;
+  background-color: var(--main-inputBackground-color);
+  /* box-shadow: 3px 3px 10px 6px rgba(0, 0, 0, 0.06); */
+  /* width: 95%; */
+}
+.dropdown .dropdown-content .dropdown-item {
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.dropdown .dropdown-content .dropdown-item:hover {
+  background-color: var(--main-activElementBackground-color);
+}
